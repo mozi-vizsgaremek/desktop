@@ -57,8 +57,7 @@ public class LoginController{
                 stage.setScene(new Scene(root, 450, 450));
                 stage.setMaximized(true);
                 stage.show();
-                // Hide this current window (if this is what you want)
-                ((Node)(event.getSource())).getScene().getWindow().hide();
+                ((Node)(event.getSource())).getScene().getWindow().hide(); //Hiding the login page
             }
             catch (IOException e) {
                 e.printStackTrace();
