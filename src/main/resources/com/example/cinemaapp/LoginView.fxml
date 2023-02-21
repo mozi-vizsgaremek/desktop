@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemaapp.LoginController">
+   <children>
+      <GridPane alignment="center" hgap="10" vgap="10">
+          <padding>
+              <Insets bottom="40" left="40" right="40" top="40" />
+          </padding>
+          <columnConstraints>
+              <ColumnConstraints halignment="RIGHT" maxWidth="Infinity" minWidth="100.0" prefWidth="100.0" />
+              <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" minWidth="200.0" prefWidth="200.0" />
+          </columnConstraints>
+          <!-- Add Header Label -->
+          <Label text="Log in" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="1">
+              <font>
+                  <Font name="Arial" size="24" />
+              </font>
+              <GridPane.margin>
+                  <Insets bottom="20" left="0" right="0" top="20" />
+              </GridPane.margin>
+          </Label>
+          <!-- Add Email Label -->
+          <Label text="Username: " GridPane.rowIndex="2" />
+          <!-- Add Email Text Field -->
+          <TextField fx:id="usernameField" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+          <!-- Add Password Label -->
+          <Label text="Password : " GridPane.rowIndex="3" />
+          <!-- Add Password Field -->
+          <PasswordField fx:id="passwordField" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         <Button mnemonicParsing="false" onAction="#login" text="Log in" GridPane.rowIndex="4" />
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+      </GridPane>
+      <GridPane alignment="center" hgap="10" layoutX="10.0" layoutY="10.0" vgap="10">
+         <padding>
+            <Insets bottom="40" left="40" right="40" top="40" />
+         </padding>
+         <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" maxWidth="Infinity" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="Infinity" minWidth="200.0" prefWidth="200.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" />
+         </rowConstraints>
+         <children>
+            <Label text="Register" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="Arial" size="24" />
+               </font>
+               <GridPane.margin>
+                  <Insets bottom="20.0" top="20.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Username: " GridPane.rowIndex="1" />
+            <TextField fx:id="usernameFieldRegister" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Password : " GridPane.rowIndex="2" />
+            <PasswordField fx:id="passwordFieldRegister" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="E-mail: " GridPane.rowIndex="3" />
+            <TextField fx:id="emailFieldRegister" prefHeight="40" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" onAction="#register" text="Register" GridPane.rowIndex="5" />
+         </children>
+      </GridPane>
+   </children>
+</HBox>
