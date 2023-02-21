@@ -15,13 +15,7 @@ public class LoginController {
     @FXML
     private TextField usernameField;
     @FXML
-    private TextField usernameFieldRegister;
-    @FXML
-    private PasswordField passwordFieldRegister;
-    @FXML
     private PasswordField passwordField;
-    @FXML
-    private TextField emailFieldReg;
 
 
     @Deprecated
@@ -48,7 +42,8 @@ public class LoginController {
             infoBox("Please enter correct Email and Password", null, "Failed");
             System.out.println();
         } else {
-            infoBox("Login Successful!", null, "Failed");
+            //TODO: Open the Main menu window
+
         }
     }
 
@@ -67,34 +62,7 @@ public class LoginController {
         alert.setContentText(message);
         alert.show();
     }
-    @Deprecated
-    public void register(ActionEvent event) {
-
-        if (usernameFieldRegister.getText().isEmpty()) {
-            showAlert("Form Error!",
-                    "Please enter a username");
-            return;
-        }
-        if (passwordFieldRegister.getText().isEmpty()) {
-            showAlert( "Form Error!",
-                    "Please enter a password");
-            return;
-        }
-        if (emailFieldReg.getText().isEmpty()) {
-            showAlert( "Form Error!",
-                    "Please enter your email");
-            return;
-        }
-
-        String usernameRegister = usernameFieldRegister.getText();
-        String passwordRegister = passwordFieldRegister.getText();
-        String emailRegister = emailFieldReg.getText();
 
 
 
-
-
-
-
-    }
 }

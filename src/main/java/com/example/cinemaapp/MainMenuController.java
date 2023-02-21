@@ -1,5 +1,5 @@
 package com.example.cinemaapp;
 
-public class MainMenu {
+public class MainMenuController {
 
 }
