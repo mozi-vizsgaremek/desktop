@@ -1,16 +1,24 @@
 package com.example.cinemaapp;
 
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Objects;
 
 
-public class LoginController {
+public class LoginController{
 
     @FXML
     private TextField usernameField;
@@ -42,10 +50,22 @@ public class LoginController {
             infoBox("Please enter correct Email and Password", null, "Failed");
             System.out.println();
         } else {
-            //TODO: Open the Main menu window
-
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("MainMenuView.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("Main menu");
+                stage.setScene(new Scene(root, 450, 450));
+                stage.setMaximized(true);
+                stage.show();
+                // Hide this current window (if this is what you want)
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            }
         }
-    }
+
 
     public static void infoBox(String infoMessage, String headerText, String title) {
         Alert alert = new Alert(AlertType.CONFIRMATION);

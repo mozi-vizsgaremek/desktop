@@ -8,9 +8,11 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-public class MainMenuApp extends Application {
 
-    @Override
+
+public class MainMenuApp extends Application{
+
+
     public void start(Stage stage) throws Exception {
         System.out.println(getClass());
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenuView.fxml")));
