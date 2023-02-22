@@ -9,8 +9,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,7 +28,6 @@ public class LoginController{
     private PasswordField passwordField;
 
 
-    @Deprecated
     public void login(ActionEvent event) throws SQLException, ClassNotFoundException {
 
         if (usernameField.getText().isEmpty()) {
@@ -50,8 +51,9 @@ public class LoginController{
             infoBox("Please enter correct Email and Password", null, "Failed");
             System.out.println();
         } else {
+
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("MainMenuView.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("ModifyPersonView.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Main menu");
                 stage.setScene(new Scene(root, 450, 450));
@@ -62,8 +64,8 @@ public class LoginController{
             catch (IOException e) {
                 e.printStackTrace();
             }
-            }
         }
+    }
 
 
     public static void infoBox(String infoMessage, String headerText, String title) {
