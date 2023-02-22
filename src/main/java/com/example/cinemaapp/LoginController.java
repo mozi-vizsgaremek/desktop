@@ -1,6 +1,6 @@
 package com.example.cinemaapp;
 
-import javafx.application.Application;
+import com.example.cinemaapp.rest.auth.TokenManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,15 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Objects;
 
 
 public class LoginController{
@@ -28,7 +25,7 @@ public class LoginController{
     private PasswordField passwordField;
 
 
-    public void login(ActionEvent event) throws SQLException, ClassNotFoundException {
+    public void login(ActionEvent event) throws SQLException, ClassNotFoundException, IOException {
 
         if (usernameField.getText().isEmpty()) {
             showAlert("Form Error!",
@@ -44,8 +41,7 @@ public class LoginController{
         String emailId = usernameField.getText();
         String password = passwordField.getText();
 
-        LoginDB LoginDB = new LoginDB();
-        boolean flag = LoginDB.validate(emailId, password);
+        boolean flag = TokenManager.login(emailId, password);
 
         if (!flag) {
             infoBox("Please enter correct Email and Password", null, "Failed");
