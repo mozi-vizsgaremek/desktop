@@ -25,7 +25,7 @@ public class LoginController{
     private PasswordField passwordField;
 
 
-    public void login(ActionEvent event) throws SQLException, ClassNotFoundException, IOException {
+    public void login(ActionEvent event) throws IOException {
 
         if (usernameField.getText().isEmpty()) {
             showAlert("Form Error!",
@@ -55,7 +55,7 @@ public class LoginController{
                 stage.setScene(new Scene(root, 450, 450));
                 stage.setMaximized(true);
                 stage.show();
-                ((Node)(event.getSource())).getScene().getWindow().hide(); //Hiding the login page
+                ((Node)(event.getSource())).getScene().getWindow().hide();
             }
             catch (IOException e) {
                 e.printStackTrace();
