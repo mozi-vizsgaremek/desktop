@@ -51,16 +51,16 @@
             <Label text="Role" GridPane.rowIndex="8" />
             <Label text="Manager ID" GridPane.rowIndex="9" />
             <Label text="Label" GridPane.rowIndex="10" />
-            <Button fx:id="modifyID" alignment="CENTER" disable="true" mnemonicParsing="false" text="Modify" GridPane.columnIndex="2" />
-            <Button fx:id="modifyUsername" alignment="CENTER" disable="true" mnemonicParsing="false" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="modifyPassword" alignment="CENTER" disable="true" mnemonicParsing="false" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Button fx:id="modifyFirstName" alignment="CENTER" disable="true" mnemonicParsing="false" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Button fx:id="modifyLastName" alignment="CENTER" disable="true" mnemonicParsing="false" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Button fx:id="modifyHourlyWage" alignment="CENTER" disable="true" mnemonicParsing="false" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Button fx:id="modifyRegistrationDate" alignment="CENTER" disable="true" mnemonicParsing="false" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <Button fx:id="modifyHiringDate" alignment="CENTER" disable="true" mnemonicParsing="false" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <Button fx:id="modifyRole" alignment="CENTER" disable="true" mnemonicParsing="false" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="8" />
-            <Button fx:id="modifyManagerID" alignment="CENTER" disable="true" mnemonicParsing="false" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+            <Button fx:id="modifyID" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyID" text="Modify" GridPane.columnIndex="2" />
+            <Button fx:id="modifyUsername" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyUsername" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="modifyPassword" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyPassword" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button fx:id="modifyFirstName" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyFirstName" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Button fx:id="modifyLastName" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyLastName" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Button fx:id="modifyHourlyWage" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyHourlyWage" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Button fx:id="modifyRegistrationDate" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyRegistrationDate" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Button fx:id="modifyHiringDate" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyHiringDate" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Button fx:id="modifyRole" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyRole" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <Button fx:id="modifyManagerID" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyManagerID" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="9" />
             <Button alignment="CENTER" disable="true" mnemonicParsing="false" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="10" />
          </children>
       </GridPane>

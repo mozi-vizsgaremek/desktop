@@ -3,13 +3,19 @@ package com.example.cinemaapp;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -122,6 +128,60 @@ public class ModifyPersonController {
     public void searchByNameChanged(InputMethodEvent inputMethodEvent) {
         String text = searchByName.getText().trim();
     }
+
+
+
+
+    // region Modify buttons
+
+    public void modifyID(ActionEvent actionEvent) {
+        StackPane stackPane = new StackPane();
+        TextField tf = new TextField();
+        Button btn = new Button();
+        stackPane.getChildren().add(tf);
+        stackPane.getChildren().add(btn);
+        btn.setOnAction(actionEvent1 -> {
+            String text = tf.getText();
+
+        });
+
+
+        Stage stage = new Stage();
+        stage.setTitle("Modifying...");
+        stage.setScene(new Scene(stackPane, 230, 100));
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.show();
+
+    }
+    public void modifyUsername(ActionEvent actionEvent) {
+    }
+
+    public void modifyPassword(ActionEvent actionEvent) {
+    }
+
+    public void modifyFirstName(ActionEvent actionEvent) {
+    }
+
+    public void modifyLastName(ActionEvent actionEvent) {
+    }
+
+    public void modifyHourlyWage(ActionEvent actionEvent) {
+    }
+
+    public void modifyRegistrationDate(ActionEvent actionEvent) {
+    }
+
+    public void modifyHiringDate(ActionEvent actionEvent) {
+    }
+
+    public void modifyRole(ActionEvent actionEvent) {
+    }
+
+    public void modifyManagerID(ActionEvent actionEvent) {
+
+    }
+
+    // endregion
 
 
 
