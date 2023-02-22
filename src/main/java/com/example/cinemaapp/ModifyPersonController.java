@@ -134,7 +134,7 @@ public class ModifyPersonController {
 
     // region Modify buttons
 
-    public void modifyID(ActionEvent actionEvent) {
+    public void modifyID(ActionEvent actionEvent) { //TODO: ID cant be modified
         StackPane stackPane = new StackPane();
         TextField tf = new TextField();
         Button btn = new Button();
@@ -156,7 +156,7 @@ public class ModifyPersonController {
     public void modifyUsername(ActionEvent actionEvent) {
     }
 
-    public void modifyPassword(ActionEvent actionEvent) {
+    public void modifyPassword(ActionEvent actionEvent) {//TODO: cant read passwords, but can modify it
     }
 
     public void modifyFirstName(ActionEvent actionEvent) {
