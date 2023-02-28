@@ -4,10 +4,6 @@ import java.time.LocalDate;
 
 public class Person {
 
-    public int getId() {
-        return id;
-    }
-
     public int getHourly_wage() {
         return hourly_wage;
     }
@@ -36,11 +32,12 @@ public class Person {
         return role;
     }
 
-    public LocalDate getReg_date() {
+    public LocalDate getReg_date() {  //nem lehet megv.
         return reg_date;
     }
 
-    public LocalDate getHire_date() {
+    public LocalDate getHire_date() { //nem lehet megv.
+
         return hire_date;
     }
 
