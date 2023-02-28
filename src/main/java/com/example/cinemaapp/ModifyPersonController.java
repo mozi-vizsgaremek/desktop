@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -77,41 +79,41 @@ public class ModifyPersonController {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
 
-        Label label1 = new Label();
-        label1.setText(newPerson.getUsername());
-        Properties.add(label1,1,0);
+        Label usernameLabel = new Label();
+        usernameLabel.setText(newPerson.getUsername());
+        Properties.add(usernameLabel,1,0);
 
         Label password = new Label();
         password.setText("*********");
         Properties.add(password,1,1);
 
-        Label label2 = new Label();
-        label2.setText(newPerson.getFirst_name());
-        Properties.add(label2,1,2);
+        Label first_nameLabel = new Label();
+        first_nameLabel.setText(newPerson.getFirst_name());
+        Properties.add(first_nameLabel,1,2);
 
-        Label label3 = new Label();
-        label3.setText(newPerson.getLast_name());
-        Properties.add(label3,1,3);
+        Label last_nameLabel = new Label();
+        last_nameLabel.setText(newPerson.getLast_name());
+        Properties.add(last_nameLabel,1,3);
 
-        Label label4 = new Label();
-        label4.setText(String.format("%d",newPerson.getHourly_wage()));
-        Properties.add(label4,1,4);
+        Label hourly_wageLabel = new Label();
+        hourly_wageLabel.setText(String.format("%d",newPerson.getHourly_wage()));
+        Properties.add(hourly_wageLabel,1,4);
 
-        Label label5 = new Label();
-        label5.setText(formatter.format(newPerson.getReg_date()));
-        Properties.add(label5,1,5);
+        Label reg_dateLabel = new Label();
+        reg_dateLabel.setText(formatter.format(newPerson.getReg_date()));
+        Properties.add(reg_dateLabel,1,5);
 
-        Label label6 = new Label();
-        label6.setText(formatter.format(newPerson.getHire_date()));
-        Properties.add(label6,1,6);
+        Label hire_dateLabel = new Label();
+        hire_dateLabel.setText(formatter.format(newPerson.getHire_date()));
+        Properties.add(hire_dateLabel,1,6);
 
-        Label label7 = new Label();
-        label7.setText(newPerson.getRole());
-        Properties.add(label7,1,7);
+        Label roleLabel = new Label();
+        roleLabel.setText(newPerson.getRole());
+        Properties.add(roleLabel,1,7);
 
-        Label label8 = new Label();
-        label8.setText(String.format("%d",newPerson.getManager_id()));
-        Properties.add(label8,1,8);
+        Label managerIdLabel = new Label();
+        managerIdLabel.setText(String.format("%d",newPerson.getManager_id()));
+        Properties.add(managerIdLabel,1,8);
 
 
     }
@@ -138,20 +140,21 @@ public class ModifyPersonController {
 
     // region Modify buttons
     public void modifyUsername(ActionEvent actionEvent) {
-        StackPane stackPane = new StackPane();
+
+        VBox vBox = new VBox();
         TextField tf = new TextField();
         Button btn = new Button();
-        stackPane.getChildren().add(tf);
-        stackPane.getChildren().add(btn);
+        btn.setText("Módosít");
+        vBox.getChildren().add(tf);
+        vBox.getChildren().add(btn);
+        vBox.setAlignment(Pos.CENTER);
         btn.setOnAction(actionEvent1 -> {
             String text = tf.getText();
 
         });
-
-
         Stage stage = new Stage();
         stage.setTitle("Modifying...");
-        stage.setScene(new Scene(stackPane, 230, 100));
+        stage.setScene(new Scene(vBox, 230, 100));
         stage.initModality(Modality.WINDOW_MODAL);
         stage.show();
     }
