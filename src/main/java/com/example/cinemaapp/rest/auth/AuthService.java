@@ -1,8 +1,9 @@
 package com.example.cinemaapp.rest.auth;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
+import retrofit2.http.*;
+
+import java.util.List;
 
 public interface AuthService {
     @POST("/auth/login")
@@ -10,4 +11,11 @@ public interface AuthService {
 
     @POST("/auth/refresh")
     Call<String> refresh(@Body() RefreshToken req);
+
+    @GET("/auth/admin/")
+    Call<List<User>> getUsers(@Header("Authorization") String accessKey);
+
+    @GET("/auth/admin/{id}")
+    Call<User> getUser(@Header("Authorization") String accessKey,
+                       @Path(value = "id", encoded = true) String userId);
 }
