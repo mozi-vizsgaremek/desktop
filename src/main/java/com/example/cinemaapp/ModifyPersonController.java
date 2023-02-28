@@ -1,5 +1,6 @@
 package com.example.cinemaapp;
 
+import com.example.cinemaapp.rest.auth.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -130,8 +131,12 @@ public class ModifyPersonController {
     }
 
     public void searchByNameChanged(InputMethodEvent inputMethodEvent) {
-        String text = searchByName.getText().trim();
-        listOfPeople.getItems().add(newPerson.toString());
+        /* String text = searchByName.getText().trim();
+        if (listOfPeople.getItems().contains(text.trim())) {
+            listOfPeople.getItems().clear();
+            listOfPeople.getItems().add(text);
+        } */
+
         //TODO: Search in the list by names
     }
 
