@@ -29,7 +29,7 @@ public class LoginController{
 
         if (usernameField.getText().isEmpty()) {
             showAlert("Form Error!",
-                    "Please enter your email id");
+                    "Please enter your username");
             return;
         }
         if (passwordField.getText().isEmpty()) {
@@ -38,13 +38,13 @@ public class LoginController{
             return;
         }
 
-        String emailId = usernameField.getText();
+        String usernameId = usernameField.getText();
         String password = passwordField.getText();
 
-        boolean flag = TokenManager.login(emailId, password);
+        boolean flag = TokenManager.login(usernameId, password);
 
         if (!flag) {
-            infoBox("Please enter correct Email and Password", null, "Failed");
+            infoBox("Please enter correct Username and Password", "Error", "Failed");
             System.out.println();
         } else {
 
