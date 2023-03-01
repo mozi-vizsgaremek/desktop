@@ -1,35 +1,21 @@
 package com.example.cinemaapp;
 
-import com.example.cinemaapp.rest.auth.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-import org.w3c.dom.ls.LSOutput;
-
-import java.io.Console;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
-
-
-import static com.sun.tools.javac.util.Constants.format;
-import static jdk.internal.icu.text.UTF16.valueOf;
 
 public class ModifyPersonController {
 
@@ -41,8 +27,6 @@ public class ModifyPersonController {
     @FXML
     private TextField searchByName;
     @FXML
-    private Button modifyID;
-    @FXML
     private Button modifyUsername;
     @FXML
     private Button modifyPassword;
@@ -52,10 +36,6 @@ public class ModifyPersonController {
     private Button modifyLastName;
     @FXML
     private Button modifyHourlyWage;
-    @FXML
-    private Button modifyRegistrationDate;
-    @FXML
-    private Button modifyHiringDate;
     @FXML
     private Button modifyRole;
     @FXML
@@ -160,8 +140,6 @@ public class ModifyPersonController {
         modifyFirstName.setDisable(!bool);
         modifyLastName.setDisable(!bool);
         modifyHourlyWage.setDisable(!bool);
-        modifyRegistrationDate.setDisable(!bool);
-        modifyHiringDate.setDisable(!bool);
         modifyRole.setDisable(!bool);
         modifyManagerID.setDisable(!bool);
     }
