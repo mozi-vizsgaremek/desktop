@@ -1,18 +1,22 @@
 package com.example.cinemaapp;
 
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,10 +44,9 @@ public class ModifyPersonController {
     private Button modifyRole;
     @FXML
     private Button modifyManagerID;
+    @FXML
+    private Button logoutButton;
     ObservableList<String> entries = FXCollections.observableArrayList();
-
-
-
     // endregion
 
     Person newPerson = new Person(0,"asd","asd",
@@ -74,22 +77,16 @@ public class ModifyPersonController {
     }
 
     private void addListenerToListView() {
-        listOfPeople.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                setModifiyButtonsAvailable(true);
-                addPersonData();
-            }
+        listOfPeople.getSelectionModel().selectedItemProperty()
+                .addListener((observableValue, s, t1) -> {
+            setModifiyButtonsAvailable(true);
+            addPersonData();
         });
     }
 
     private void addListenerToTextField() {
-        searchByName.textProperty().addListener(new ChangeListener() {
-            public void changed(ObservableValue observable, Object oldVal,
-                                Object newVal) {
-                search((String) oldVal, (String) newVal);
-            }
-        });
+        searchByName.textProperty().addListener((ChangeListener)
+                (observable, oldVal, newVal) -> search((String) oldVal, (String) newVal));
     }
 
     private void addPersonData() {
@@ -192,32 +189,43 @@ public class ModifyPersonController {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.show();
     }
-
     public void modifyPassword(ActionEvent actionEvent) {
 
     }
-
     public void modifyFirstName(ActionEvent actionEvent) {
 
     }
-
     public void modifyLastName(ActionEvent actionEvent) {
 
     }
-
     public void modifyHourlyWage(ActionEvent actionEvent) {
 
     }
     public void modifyRole(ActionEvent actionEvent) {
 
     }
-
     public void modifyManagerID(ActionEvent actionEvent) {
 
     }
-
     // endregion
+    public void logoutFromModifyPerson(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("You're about to log out!");
+        alert.setContentText("Do you really want to log out?");
+        if (alert.showAndWait().get() == ButtonType.OK){
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("User Login");
+                stage.setScene(new Scene(root, 800, 600));
+                stage.show();
 
-
-
+                ((Node)(event.getSource())).getScene().getWindow().hide();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
