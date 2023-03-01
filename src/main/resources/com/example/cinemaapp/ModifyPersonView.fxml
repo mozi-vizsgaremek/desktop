@@ -15,7 +15,7 @@
    <children>
       <VBox prefHeight="540.0" prefWidth="227.0" spacing="10.0">
          <children>
-            <TextField fx:id="searchByName" onInputMethodTextChanged="#searchByNameChanged" />
+            <TextField fx:id="searchByName"/>
             <Label alignment="TOP_CENTER" text="Search by name" textAlignment="CENTER" />
          </children>
       </VBox>

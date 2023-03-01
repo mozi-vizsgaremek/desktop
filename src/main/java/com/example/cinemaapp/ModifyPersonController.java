@@ -3,23 +3,29 @@ package com.example.cinemaapp;
 import com.example.cinemaapp.rest.auth.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import org.w3c.dom.ls.LSOutput;
 
+import java.io.Console;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 
 import static com.sun.tools.javac.util.Constants.format;
@@ -54,6 +60,7 @@ public class ModifyPersonController {
     private Button modifyRole;
     @FXML
     private Button modifyManagerID;
+    ObservableList<String> entries = FXCollections.observableArrayList();
 
 
 
@@ -63,19 +70,48 @@ public class ModifyPersonController {
             "asd","asd",0, LocalDate.now(),
             LocalDate.now(),"asd",0);
 
+    ArrayList<Person> lista = new ArrayList<Person>();
+
     @FXML
     private void initialize() {
         listOfPeople.getItems().add(newPerson.toString());
+        lista.add(newPerson);
+        addListenerToTextField();
+        addListenerToListView();
+        addEntriesTEST();
+    }
+
+    private void addEntriesTEST() {
+        listOfPeople.setMaxHeight(180);
+        for (int i = 0; i < 100; i++) {
+            entries.add("Item " + i);
+        }
+        entries.add("A");
+        entries.add("B");
+        entries.add("C");
+        entries.add("D");
+        listOfPeople.setItems(entries);
+    }
+
+    private void addListenerToListView() {
         listOfPeople.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 setModifiyButtonsAvailable(true);
                 addPersonData();
             }
-
-
         });
     }
+
+    private void addListenerToTextField() {
+        searchByName.textProperty().addListener(new ChangeListener() {
+            public void changed(ObservableValue observable, Object oldVal,
+                                Object newVal) {
+                search((String) oldVal, (String) newVal);
+            }
+        });
+    }
+
     private void addPersonData() {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
@@ -130,18 +166,33 @@ public class ModifyPersonController {
         modifyManagerID.setDisable(!bool);
     }
 
-    public void searchByNameChanged(InputMethodEvent inputMethodEvent) {
-        /* String text = searchByName.getText().trim();
-        if (listOfPeople.getItems().contains(text.trim())) {
-            listOfPeople.getItems().clear();
-            listOfPeople.getItems().add(text);
-        } */
 
-        //TODO: Search in the list by names
-    }
+    public void search(String oldVal, String newVal) {
+        if (oldVal != null && (newVal.length() < oldVal.length())) {
+            listOfPeople.setItems(entries);
+        }
+        String value = newVal.toUpperCase();
+        ObservableList<String> subentries = FXCollections.observableArrayList();
+        for (Object entry : listOfPeople.getItems()) {
+            boolean match = true;
+            String entryText = (String) entry;
+            if (!entryText.toUpperCase().contains(value)) {
+                match = false;
+                break;
+            }
+            if (match) {
+                subentries.add(entryText);
+            }
+        }
 
-
-
+        if (subentries.stream().count() <= 0) {
+            listOfPeople.setItems(entries);
+            listOfPeople.refresh();
+            return;
+        }
+        listOfPeople.setItems(subentries);
+        listOfPeople.refresh();
+    } //TODO: It only work for the first item
 
     // region Modify buttons
     public void modifyUsername(ActionEvent actionEvent) {
