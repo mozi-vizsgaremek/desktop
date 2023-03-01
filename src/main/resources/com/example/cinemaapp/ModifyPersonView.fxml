@@ -53,8 +53,6 @@
             <Button fx:id="modifyFirstName" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyFirstName" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Button fx:id="modifyLastName" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyLastName" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Button fx:id="modifyHourlyWage" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyHourlyWage" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Button fx:id="modifyRegistrationDate" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyRegistrationDate" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <Button fx:id="modifyHiringDate" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyHiringDate" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <Button fx:id="modifyRole" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyRole" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <Button fx:id="modifyManagerID" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyManagerID" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="8" />
          </children>

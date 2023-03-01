@@ -230,15 +230,6 @@ public class ModifyPersonController {
     public void modifyHourlyWage(ActionEvent actionEvent) {
 
     }
-
-    public void modifyRegistrationDate(ActionEvent actionEvent) {
-
-    }
-
-    public void modifyHiringDate(ActionEvent actionEvent) {
-
-    }
-
     public void modifyRole(ActionEvent actionEvent) {
 
     }
