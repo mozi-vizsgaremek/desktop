@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 public class ModifyPersonController {
 
+
     // region Declarations
     @FXML
     private GridPane Properties;
@@ -46,6 +47,8 @@ public class ModifyPersonController {
     private Button modifyManagerID;
     @FXML
     private Button logoutButton;
+    @FXML
+    private Button backToMainMenuButton;
     ObservableList<String> entries = FXCollections.observableArrayList();
     // endregion
 
@@ -59,9 +62,10 @@ public class ModifyPersonController {
     private void initialize() {
         listOfPeople.getItems().add(newPerson.toString());
         lista.add(newPerson);
+        addEntriesTEST();
         addListenerToTextField();
         addListenerToListView();
-        addEntriesTEST();
+
     }
 
     private void addEntriesTEST() {
@@ -227,5 +231,29 @@ public class ModifyPersonController {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void exit(Stage stage) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setContentText("Do you really want to exit the application?");
+
+        if (alert.showAndWait().get() == ButtonType.OK){
+            stage.close();
+        }
+    }
+
+    public void backToMainMenu(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("MainMenuView.fxml"));
+        Stage stage = new Stage();
+        stage.setTitle("Main menu");
+        stage.setMaximized(true);
+        stage.setScene(new Scene(root, 800, 600));
+        stage.setOnCloseRequest(CloseEvent -> {
+            CloseEvent.consume();
+            exit(stage);
+        });
+        stage.show();
+        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 }
