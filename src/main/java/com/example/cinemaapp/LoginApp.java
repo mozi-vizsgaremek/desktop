@@ -32,11 +32,9 @@ public class LoginApp extends Application {
     public void logout(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
-        alert.setHeaderText("You're about to exit the application!");
         alert.setContentText("Do you really want to exit the application?");
 
         if (alert.showAndWait().get() == ButtonType.OK){
-            System.out.println("You successfully logged out");
             stage.close();
         }
     }

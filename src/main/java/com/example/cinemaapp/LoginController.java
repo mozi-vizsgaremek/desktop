@@ -1,7 +1,6 @@
 package com.example.cinemaapp;
 
 import com.example.cinemaapp.rest.auth.TokenManager;
-import com.example.cinemaapp.rest.auth.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 
 public class LoginController{
@@ -49,16 +47,15 @@ public class LoginController{
             infoBox("Please enter correct Username and Password", "Error", "Failed");
             System.out.println();
         } else {
-
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("ModifyPersonView.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("MainMenuView.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Main menu");
-                stage.setScene(new Scene(root, 450, 450));
                 stage.setMaximized(true);
+                stage.setScene(new Scene(root, 800, 600));
                 stage.setOnCloseRequest(CloseEvent -> {
                     CloseEvent.consume();
-                    logout(stage);
+                    exit(stage);
                 });
                 stage.show();
                 ((Node)(event.getSource())).getScene().getWindow().hide();
@@ -68,14 +65,15 @@ public class LoginController{
             }
         }
     }
-    public void logout(Stage stage) {
+
+
+
+    public void exit(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
-        alert.setHeaderText("You're about to exit the application!");
         alert.setContentText("Do you really want to exit the application?");
 
         if (alert.showAndWait().get() == ButtonType.OK){
-            System.out.println("You successfully logged out");
             stage.close();
         }
     }
