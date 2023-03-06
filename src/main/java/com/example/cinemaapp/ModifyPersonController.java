@@ -3,6 +3,7 @@ package com.example.cinemaapp;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,7 +57,7 @@ public class ModifyPersonController {
             "asd","asd",0, LocalDate.now(),
             LocalDate.now(),"asd",0);
 
-    ArrayList<Person> lista = new ArrayList<Person>();
+    ArrayList<Person> lista = new ArrayList<>();
 
     @FXML
     private void initialize() {
@@ -89,10 +90,24 @@ public class ModifyPersonController {
     }
 
     private void addListenerToTextField() {
-        searchByName.textProperty().addListener((ChangeListener)
-                (observable, oldVal, newVal) -> search((String) oldVal, (String) newVal));
-    }
 
+            ObservableList<String> data = FXCollections.observableArrayList("Teszt Elek", "Kovács János", "Nagy Péter", "Kis Katalin");
+
+            FilteredList<String> filteredData = new FilteredList<>(data, p -> true);
+
+            searchByName.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(person -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    return person.toLowerCase().contains(lowerCaseFilter);
+                });
+            });
+
+            listOfPeople.setItems(filteredData);
+    }
     private void addPersonData() {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
@@ -144,34 +159,6 @@ public class ModifyPersonController {
         modifyRole.setDisable(!bool);
         modifyManagerID.setDisable(!bool);
     }
-
-
-    public void search(String oldVal, String newVal) {
-        if (oldVal != null && (newVal.length() < oldVal.length())) {
-            listOfPeople.setItems(entries);
-        }
-        String value = newVal.toUpperCase();
-        ObservableList<String> subentries = FXCollections.observableArrayList();
-        for (Object entry : listOfPeople.getItems()) {
-            boolean match = true;
-            String entryText = (String) entry;
-            if (!entryText.toUpperCase().contains(value)) {
-                match = false;
-                break;
-            }
-            if (match) {
-                subentries.add(entryText);
-            }
-        }
-
-        if (subentries.stream().count() <= 0) {
-            listOfPeople.setItems(entries);
-            listOfPeople.refresh();
-            return;
-        }
-        listOfPeople.setItems(subentries);
-        listOfPeople.refresh();
-    } //TODO: It only work for the first item
 
     // region Modify buttons
     public void modifyUsername(ActionEvent actionEvent) {
