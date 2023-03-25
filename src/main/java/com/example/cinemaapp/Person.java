@@ -45,10 +45,10 @@ public class Person {
         return id;
     }
 
-    private int id, hourly_wage, manager_id;
-    private String username, password, first_name, last_name, role;
-    private LocalDate reg_date;
-    private LocalDate hire_date;
+    public int id, hourly_wage, manager_id;
+    public String username, password, first_name, last_name, role;
+    public LocalDate reg_date;
+    public LocalDate hire_date;
 
     public Person(int id, String username, String password, String first_name,
                   String last_name, int hourly_wage, LocalDate reg_date,
