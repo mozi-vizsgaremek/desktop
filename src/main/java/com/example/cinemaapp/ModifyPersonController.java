@@ -1,6 +1,6 @@
 package com.example.cinemaapp;
 
-import com.example.cinemaapp.rest.auth.User;
+import com.example.cinemaapp.rest.RetrofitSingleton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -17,13 +17,16 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ModifyPersonController {
 
@@ -63,6 +66,7 @@ public class ModifyPersonController {
 
     ArrayList<Person> lista = new ArrayList<>();
 
+
     @FXML
     private void initialize() {
         listOfPeople.getItems().add(newPerson.toString());
@@ -74,17 +78,27 @@ public class ModifyPersonController {
     }
 
     private void addEntriesTEST() {
-        listOfPeople.setMaxHeight(180);
-        for (int i = 0; i < 100; i++) {
-            entries.add("Item " + i);
-        }
-        entries.add("A");
-        entries.add("B");
-        entries.add("C");
-        entries.add("D");
-        listOfPeople.setItems(entries);
-    }
+       /* Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://vr-api.leventea.hu/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
+        UsersCRUD usersCRUD = RetrofitSingleton.getInstance().create(UsersCRUD.class);
+        Call<Person[]> call = usersCRUD.getPeople();
+        call.enqueue(new Callback<Person[]>() {
+            @Override
+            public void onResponse(Call<Person[]> call, Response<Person[]> response) {
+                Person[] personList = response.body();
+                // Add the data to your ListView
+                for (int i = 0; i < Objects.requireNonNull(personList).length; i++) {
+                    listOfPeople.getItems().add(String.valueOf(personList[i]));
+                }
+
+            }
+            @Override
+            public void onFailure(Call<Person[]> call, Throwable t) {}
+        });*/
+    }
     private void addListenerToListView() {
         listOfPeople.getSelectionModel().selectedItemProperty()
                 .addListener((observableValue, s, t1) -> {
@@ -170,13 +184,14 @@ public class ModifyPersonController {
         VBox vBox = new VBox();
         TextField tf = new TextField();
         Button btn = new Button();
-        btn.setText("Módosít");
+        btn.setText("Modify");
         vBox.getChildren().add(tf);
         vBox.getChildren().add(btn);
         vBox.setAlignment(Pos.CENTER);
         btn.setOnAction(actionEvent1 -> {
             String newText = tf.getText();
             //TODO: modify username with retrofit
+
            /* // Update the data with Retrofit
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("https://example.com/api/")
