@@ -6,15 +6,15 @@ import retrofit2.http.*;
 import java.util.List;
 
 public interface UsersCRUD {
-    @GET("items")
-    Call<List<Person>> getItems();
+    @GET("/auth/admin")
+    Call<Person[]> getPeople();
 
-    @POST("items")
-    Call<Person> createItem(@Body Person person);
+    @POST("/auth/admin")
+    Call<Person> createPerson(@Body Person person);
 
-    @PUT("items/{id}")
-    Call<Person> updateItem(@Path("id") int id, @Body Person person);
+    @PUT("/auth/admin/{id}")
+    Call<Person> updatePerson(@Path("id") int id, @Body Person person);
 
-    @DELETE("items/{id}")
-    Call<Void> deleteItem(@Path("id") int id);
+    @DELETE("/auth/admin/{id}")
+    Call<Void> deletePerson(@Path("id") int id);
 }
