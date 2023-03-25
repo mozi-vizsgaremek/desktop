@@ -1,6 +1,7 @@
 package com.example.cinemaapp;
 
 import com.example.cinemaapp.rest.auth.TokenManager;
+import com.example.cinemaapp.rest.auth.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,6 +48,7 @@ public class LoginController{
             infoBox("Please enter correct Username and Password", "Error", "Failed");
             System.out.println();
         } else {
+            //TODO: user can only log in with an administrator role
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("MainMenuView.fxml"));
                 Stage stage = new Stage();
