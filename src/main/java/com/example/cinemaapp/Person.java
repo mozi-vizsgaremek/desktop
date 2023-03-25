@@ -41,6 +41,10 @@ public class Person {
         return hire_date;
     }
 
+    public int getId() {
+        return id;
+    }
+
     private int id, hourly_wage, manager_id;
     private String username, password, first_name, last_name, role;
     private LocalDate reg_date;
