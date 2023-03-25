@@ -1,6 +1,6 @@
 package com.example.cinemaapp;
 
-import javafx.beans.value.ChangeListener;
+import com.example.cinemaapp.rest.auth.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -16,6 +16,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -53,6 +56,7 @@ public class ModifyPersonController {
     ObservableList<String> entries = FXCollections.observableArrayList();
     // endregion
 
+    //TODO: delete test object newPerson, and add every person to listOfPeople using retrofit
     Person newPerson = new Person(0,"asd","asd",
             "asd","asd",0, LocalDate.now(),
             LocalDate.now(),"asd",0);
@@ -171,8 +175,30 @@ public class ModifyPersonController {
         vBox.getChildren().add(btn);
         vBox.setAlignment(Pos.CENTER);
         btn.setOnAction(actionEvent1 -> {
-            String text = tf.getText();
-
+            String newText = tf.getText();
+            //TODO: modify username with retrofit
+           /* // Update the data with Retrofit
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://example.com/api/")
+                    .build();
+            UsersCRUD userService = retrofit.create(UsersCRUD.class);
+            User updatedUser = new Person(userId, newText); // create a new User object with the updated data
+            Call<User> call = userService.updateItem(id, updatedUser);
+            try {
+                Response<User> response = call.execute();
+                if (response.isSuccessful()) {
+                    // Update the data in the TableView or ListView with the updated User object
+                    person.setName(newText);
+                    // Close the window
+                    ((Stage)btn.getScene().getWindow()).close();
+                } else {
+                    // Handle the error
+                    System.out.println("Update failed: " + response.message());
+                }
+            } catch (IOException e) {
+                // Handle the network error
+                System.out.println("Network error: " + e.getMessage());
+            }*/
         });
         Stage stage = new Stage();
         stage.setTitle("Modifying...");
