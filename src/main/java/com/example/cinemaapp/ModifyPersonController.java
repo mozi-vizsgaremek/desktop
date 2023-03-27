@@ -78,13 +78,8 @@ public class ModifyPersonController {
     }
 
     private void addEntriesTEST() {
-       /* Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://vr-api.leventea.hu/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
         UsersCRUD usersCRUD = RetrofitSingleton.getInstance().create(UsersCRUD.class);
-        Call<Person[]> call = usersCRUD.getPeople();
+        var call = usersCRUD.getPeople();
         call.enqueue(new Callback<Person[]>() {
             @Override
             public void onResponse(Call<Person[]> call, Response<Person[]> response) {
@@ -97,7 +92,7 @@ public class ModifyPersonController {
             }
             @Override
             public void onFailure(Call<Person[]> call, Throwable t) {}
-        });*/
+        });
     }
     private void addListenerToListView() {
         listOfPeople.getSelectionModel().selectedItemProperty()

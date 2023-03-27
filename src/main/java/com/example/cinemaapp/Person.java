@@ -37,7 +37,6 @@ public class Person {
     }
 
     public LocalDate getHire_date() { //nem lehet megv.
-
         return hire_date;
     }
 
