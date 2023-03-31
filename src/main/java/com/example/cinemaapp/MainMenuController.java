@@ -12,6 +12,7 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainMenuController {
     @FXML
@@ -65,7 +66,7 @@ public class MainMenuController {
     }
 
     public void goToModifyPerson(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ModifyPersonView.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ModifyPersonView.fxml")));
         Stage stage = new Stage();
         stage.setTitle("Modify a person");
         stage.setMaximized(true);
@@ -78,7 +79,7 @@ public class MainMenuController {
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
     public void goToModifyMovies(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ModifyMoviesView.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ModifyMoviesView.fxml")));
         Stage stage = new Stage();
         stage.setTitle("Modify a movie");
         stage.setMaximized(true);
@@ -91,7 +92,7 @@ public class MainMenuController {
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
     public void goToModifyAuditoriums(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ModifyAuditoriumsView.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ModifyAuditoriumsView.fxml")));
         Stage stage = new Stage();
         stage.setTitle("Modify an auditorium");
         stage.setMaximized(true);

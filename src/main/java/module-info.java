@@ -6,6 +6,7 @@ module com.example.test {
     requires retrofit2;
     requires retrofit2.converter.gson;
     requires com.google.gson;
+    requires org.apache.commons.lang3;
 
     opens com.example.cinemaapp to javafx.fxml;
     exports com.example.cinemaapp;

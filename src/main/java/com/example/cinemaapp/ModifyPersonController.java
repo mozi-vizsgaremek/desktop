@@ -2,6 +2,8 @@ package com.example.cinemaapp;
 
 import com.example.cinemaapp.rest.RetrofitSingleton;
 import com.example.cinemaapp.rest.auth.TokenManager;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -20,13 +22,13 @@ import javafx.stage.Stage;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import org.apache.commons.lang3.StringUtils;
+
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ModifyPersonController {
 
@@ -35,7 +37,7 @@ public class ModifyPersonController {
     @FXML
     private GridPane Properties;
     @FXML
-    private ListView<String> listOfPeople;
+    private ListView<Person> listOfPeople;
     @FXML
     private TextField searchByName;
     @FXML
@@ -56,62 +58,92 @@ public class ModifyPersonController {
     private Button logoutButton;
     @FXML
     private Button backToMainMenuButton;
-    ObservableList<String> entries = FXCollections.observableArrayList();
+    private Map<String, Person> idMap = new HashMap<>();
     // endregion
 
     //TODO: delete test object newPerson, and add every person to listOfPeople using retrofit
-    Person newPerson = new Person("","asd","asd",
-            "asd","asd",0, LocalDateTime.now(),
-            LocalDateTime.now(),"asd","");
-
     ArrayList<Person> lista = new ArrayList<>();
 
 
     @FXML
     private void initialize() throws IOException {
-        listOfPeople.getItems().add(newPerson.toString());
-        lista.add(newPerson);
-        addEntriesTEST();
-        addListenerToTextField();
+        addItemsToListOfPeople();
         addListenerToListView();
+        addListenerToTextField();
+
 
     }
 
-    private void addEntriesTEST() throws IOException {
+    private void addItemsToListOfPeople() throws IOException {
         UsersCRUD usersCRUD = RetrofitSingleton.getInstance().create(UsersCRUD.class);
         var call = usersCRUD.getPeople(TokenManager.getAccessToken());
         call.enqueue(new Callback<List<Person>>() {
             @Override
             public void onResponse(Call<List<Person>> call, Response<List<Person>> response) {
-                //TODO: person list size is null
                 List<Person> personList = response.body();
-                System.out.println(response.errorBody());
-                // Add the data to your ListView
-                for (int i = 0; i < Objects.requireNonNull(personList).size(); i++) {
-                    listOfPeople.getItems().add(String.valueOf(personList.get(i)));
+                if (personList != null) {
+                    // Create a new ObservableList to back the ListView
+                    ObservableList<Person> observableList = FXCollections.observableArrayList();
+                    observableList.addAll(personList);
+                    // Set the items property of the ListView to the new ObservableList
+                    listOfPeople.setItems(observableList);
                 }
-
+                else {
+                    System.out.println("The person list is null.");
+                }
             }
 
             @Override
             public void onFailure(Call<List<Person>> call, Throwable t) {
-                System.out.println("what");
+                System.out.println("The API call failed.");
             }
+
+
+
         });
     }
     private void addListenerToListView() {
-        listOfPeople.getSelectionModel().selectedItemProperty()
-                .addListener((observableValue, s, t1) -> {
-            setModifiyButtonsAvailable(true);
-            addPersonData();
+        setModifiyButtonsAvailable(true);
+        for (Person item : listOfPeople.getItems()) {
+            String id = item.id;
+            String username = item.username;
+            String password = item.password;
+            String first_name = item.firstName;
+            String last_name = item.lastName;
+            int hourly_wage = item.hourlyWage;
+            LocalDateTime reg_date = item.registrationDate;
+            LocalDateTime hire_date = item.hireDate;
+            String role = item.role;
+            String manager_id = item.managerId;
+
+
+            Person person = new Person(id, username, password, first_name, last_name,
+                    hourly_wage, reg_date, hire_date, role, manager_id);
+            idMap.put(id, person);
+        }
+        listOfPeople.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Person>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Person> observable, Person oldValue, Person newValue) {
+                        System.out.println(newValue.id);
+                        System.out.println(newValue.username);
+                        System.out.println(newValue.firstName);
+                        System.out.println(newValue.lastName);
+                        System.out.println(newValue.password);
+
+                        String selectedId = newValue.id;
+                        // Get the corresponding Person object from the idMap using the ID as the key
+                        Person selectedPerson = idMap.get(selectedId);
+                        addPersonData(selectedPerson.id);
+                    }
+
         });
     }
 
     private void addListenerToTextField() {
 
-            ObservableList<String> data = FXCollections.observableArrayList("Teszt Elek", "Kovács János", "Nagy Péter", "Kis Katalin");
+            ObservableList<Person> data = FXCollections.observableArrayList();
 
-            FilteredList<String> filteredData = new FilteredList<>(data, p -> true);
+            FilteredList<Person> filteredData = new FilteredList<>(data, p -> true);
 
             searchByName.textProperty().addListener((observable, oldValue, newValue) -> {
                 filteredData.setPredicate(person -> {
@@ -120,50 +152,50 @@ public class ModifyPersonController {
                     }
                     String lowerCaseFilter = newValue.toLowerCase();
 
-                    return person.toLowerCase().contains(lowerCaseFilter);
+                    return person.toString().toLowerCase().contains(lowerCaseFilter);
                 });
             });
 
             listOfPeople.setItems(filteredData);
     }
-    private void addPersonData() {
+    private void addPersonData(String id) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
 
         Label usernameLabel = new Label();
-        usernameLabel.setText(newPerson.getUsername());
+        usernameLabel.setText(idMap.get(id).username);
         Properties.add(usernameLabel,1,0);
 
         Label password = new Label();
-        password.setText("*********");
+        password.setText(idMap.get(id).password);
         Properties.add(password,1,1);
 
         Label first_nameLabel = new Label();
-        first_nameLabel.setText(newPerson.getFirstName());
+        first_nameLabel.setText(idMap.get(id).firstName);
         Properties.add(first_nameLabel,1,2);
 
         Label last_nameLabel = new Label();
-        last_nameLabel.setText(newPerson.getLastName());
+        last_nameLabel.setText(idMap.get(id).lastName);
         Properties.add(last_nameLabel,1,3);
 
         Label hourly_wageLabel = new Label();
-        hourly_wageLabel.setText(String.format("%d",newPerson.getHourlyWage()));
+        hourly_wageLabel.setText(String.format("%d",idMap.get(id).hourlyWage));
         Properties.add(hourly_wageLabel,1,4);
 
         Label reg_dateLabel = new Label();
-        reg_dateLabel.setText(formatter.format(newPerson.getRegistrationDate()));
+        reg_dateLabel.setText(formatter.format(idMap.get(id).registrationDate));
         Properties.add(reg_dateLabel,1,5);
 
         Label hire_dateLabel = new Label();
-        hire_dateLabel.setText(formatter.format(newPerson.getHireDate()));
+        hire_dateLabel.setText(formatter.format(idMap.get(id).hireDate));
         Properties.add(hire_dateLabel,1,6);
 
         Label roleLabel = new Label();
-        roleLabel.setText(newPerson.getRole());
+        roleLabel.setText(idMap.get(id).role);
         Properties.add(roleLabel,1,7);
 
         Label managerIdLabel = new Label();
-        managerIdLabel.setText(String.format("%d",newPerson.getManager_id()));
+        managerIdLabel.setText(idMap.get(id).managerId);
         Properties.add(managerIdLabel,1,8);
 
 
