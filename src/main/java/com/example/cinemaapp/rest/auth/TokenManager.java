@@ -58,6 +58,6 @@ public class TokenManager {
             accessToken = refreshToken();
         }
 
-        return accessToken;
+        return "Bearer " + accessToken;
     }
 }

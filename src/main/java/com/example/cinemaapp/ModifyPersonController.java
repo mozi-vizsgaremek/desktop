@@ -20,11 +20,9 @@ import javafx.stage.Stage;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,9 +60,9 @@ public class ModifyPersonController {
     // endregion
 
     //TODO: delete test object newPerson, and add every person to listOfPeople using retrofit
-    Person newPerson = new Person(0,"asd","asd",
-            "asd","asd",0, LocalDate.now(),
-            LocalDate.now(),"asd",0);
+    Person newPerson = new Person("","asd","asd",
+            "asd","asd",0, LocalDateTime.now(),
+            LocalDateTime.now(),"asd","");
 
     ArrayList<Person> lista = new ArrayList<>();
 
@@ -97,6 +95,7 @@ public class ModifyPersonController {
 
             @Override
             public void onFailure(Call<List<Person>> call, Throwable t) {
+                System.out.println("what");
             }
         });
     }
@@ -140,23 +139,23 @@ public class ModifyPersonController {
         Properties.add(password,1,1);
 
         Label first_nameLabel = new Label();
-        first_nameLabel.setText(newPerson.getFirst_name());
+        first_nameLabel.setText(newPerson.getFirstName());
         Properties.add(first_nameLabel,1,2);
 
         Label last_nameLabel = new Label();
-        last_nameLabel.setText(newPerson.getLast_name());
+        last_nameLabel.setText(newPerson.getLastName());
         Properties.add(last_nameLabel,1,3);
 
         Label hourly_wageLabel = new Label();
-        hourly_wageLabel.setText(String.format("%d",newPerson.getHourly_wage()));
+        hourly_wageLabel.setText(String.format("%d",newPerson.getHourlyWage()));
         Properties.add(hourly_wageLabel,1,4);
 
         Label reg_dateLabel = new Label();
-        reg_dateLabel.setText(formatter.format(newPerson.getReg_date()));
+        reg_dateLabel.setText(formatter.format(newPerson.getRegistrationDate()));
         Properties.add(reg_dateLabel,1,5);
 
         Label hire_dateLabel = new Label();
-        hire_dateLabel.setText(formatter.format(newPerson.getHire_date()));
+        hire_dateLabel.setText(formatter.format(newPerson.getHireDate()));
         Properties.add(hire_dateLabel,1,6);
 
         Label roleLabel = new Label();
