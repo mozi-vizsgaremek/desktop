@@ -12,9 +12,9 @@ public interface UsersCRUD {
     @POST("/auth/admin")
     Call<Person> createPerson(@Body Person person);
 
-    @PUT("/auth/admin/{id}")
-    Call<Person> updatePerson(@Path("id") int id, @Body Person person);
+    @PATCH("/auth/admin/{id}")
+    Call<Person> updatePerson(@Header("Authorization") String accessKey, @Path("id") String id, @Body Person person);
 
     @DELETE("/auth/admin/{id}")
-    Call<Void> deletePerson(@Path("id") int id);
+    Call<Void> deletePerson(@Path("id") String id);
 }

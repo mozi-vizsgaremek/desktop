@@ -65,6 +65,15 @@
             <Button fx:id="modifyHourlyWage" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyHourlyWage" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Button fx:id="modifyRole" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyRole" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <Button fx:id="modifyManagerID" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#modifyManagerID" text="Modify" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <Label fx:id="usernameLabel" GridPane.columnIndex="1" />
+            <Label fx:id="passwordLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="first_nameLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="last_nameLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="hourly_wageLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="reg_dateLabel" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="hire_dateLabel" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="roleLabel" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label fx:id="managerIdLabel" GridPane.columnIndex="1" GridPane.rowIndex="8" />
          </children>
       </GridPane>
    </children>
