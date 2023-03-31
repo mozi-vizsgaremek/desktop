@@ -87,6 +87,11 @@ public class ModifyPersonController {
                     observableList.addAll(personList);
                     // Set the items property of the ListView to the new ObservableList
                     listOfPeople.setItems(observableList);
+
+                    for (var person: personList) {
+                        idMap.put(person.id, person);
+                    }
+
                 }
                 else {
                     System.out.println("The person list is null.");
@@ -104,32 +109,10 @@ public class ModifyPersonController {
     }
     private void addListenerToListView() {
         setModifiyButtonsAvailable(true);
-        for (Person item : listOfPeople.getItems()) {
-            String id = item.id;
-            String username = item.username;
-            String password = item.password;
-            String first_name = item.firstName;
-            String last_name = item.lastName;
-            int hourly_wage = item.hourlyWage;
-            LocalDateTime reg_date = item.registrationDate;
-            LocalDateTime hire_date = item.hireDate;
-            String role = item.role;
-            String manager_id = item.managerId;
 
-
-            Person person = new Person(id, username, password, first_name, last_name,
-                    hourly_wage, reg_date, hire_date, role, manager_id);
-            idMap.put(id, person);
-        }
         listOfPeople.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Person>() {
                     @Override
                     public void changed(ObservableValue<? extends Person> observable, Person oldValue, Person newValue) {
-                        System.out.println(newValue.id);
-                        System.out.println(newValue.username);
-                        System.out.println(newValue.firstName);
-                        System.out.println(newValue.lastName);
-                        System.out.println(newValue.password);
-
                         String selectedId = newValue.id;
                         // Get the corresponding Person object from the idMap using the ID as the key
                         Person selectedPerson = idMap.get(selectedId);
@@ -159,16 +142,12 @@ public class ModifyPersonController {
             listOfPeople.setItems(filteredData);
     }
     private void addPersonData(String id) {
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        var p = idMap.get(id);
 
         Label usernameLabel = new Label();
         usernameLabel.setText(idMap.get(id).username);
         Properties.add(usernameLabel,1,0);
-
-        Label password = new Label();
-        password.setText(idMap.get(id).password);
-        Properties.add(password,1,1);
 
         Label first_nameLabel = new Label();
         first_nameLabel.setText(idMap.get(id).firstName);
@@ -186,18 +165,21 @@ public class ModifyPersonController {
         reg_dateLabel.setText(formatter.format(idMap.get(id).registrationDate));
         Properties.add(reg_dateLabel,1,5);
 
-        Label hire_dateLabel = new Label();
-        hire_dateLabel.setText(formatter.format(idMap.get(id).hireDate));
-        Properties.add(hire_dateLabel,1,6);
+        if (p.hireDate != null) {
+            Label hire_dateLabel = new Label();
+            hire_dateLabel.setText(formatter.format(idMap.get(id).hireDate));
+            Properties.add(hire_dateLabel, 1, 6);
+        }
 
         Label roleLabel = new Label();
         roleLabel.setText(idMap.get(id).role);
         Properties.add(roleLabel,1,7);
 
-        Label managerIdLabel = new Label();
-        managerIdLabel.setText(idMap.get(id).managerId);
-        Properties.add(managerIdLabel,1,8);
-
+        if (p.managerId != null) {
+            Label managerIdLabel = new Label();
+            managerIdLabel.setText(p.managerId);
+            Properties.add(managerIdLabel, 1, 8);
+        }
 
     }
     private void setModifiyButtonsAvailable(boolean bool) {
