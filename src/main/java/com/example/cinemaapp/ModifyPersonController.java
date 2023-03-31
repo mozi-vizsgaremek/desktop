@@ -1,6 +1,7 @@
 package com.example.cinemaapp;
 
 import com.example.cinemaapp.rest.RetrofitSingleton;
+import com.example.cinemaapp.rest.auth.TokenManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ModifyPersonController {
@@ -68,7 +70,7 @@ public class ModifyPersonController {
 
 
     @FXML
-    private void initialize() {
+    private void initialize() throws IOException {
         listOfPeople.getItems().add(newPerson.toString());
         lista.add(newPerson);
         addEntriesTEST();
@@ -77,21 +79,25 @@ public class ModifyPersonController {
 
     }
 
-    private void addEntriesTEST() {
+    private void addEntriesTEST() throws IOException {
         UsersCRUD usersCRUD = RetrofitSingleton.getInstance().create(UsersCRUD.class);
-        var call = usersCRUD.getPeople();
-        call.enqueue(new Callback<Person[]>() {
+        var call = usersCRUD.getPeople(TokenManager.getAccessToken());
+        call.enqueue(new Callback<List<Person>>() {
             @Override
-            public void onResponse(Call<Person[]> call, Response<Person[]> response) {
-                Person[] personList = response.body();
+            public void onResponse(Call<List<Person>> call, Response<List<Person>> response) {
+                //TODO: person list size is null
+                List<Person> personList = response.body();
+                System.out.println(response.errorBody());
                 // Add the data to your ListView
-                for (int i = 0; i < Objects.requireNonNull(personList).length; i++) {
-                    listOfPeople.getItems().add(String.valueOf(personList[i]));
+                for (int i = 0; i < Objects.requireNonNull(personList).size(); i++) {
+                    listOfPeople.getItems().add(String.valueOf(personList.get(i)));
                 }
 
             }
+
             @Override
-            public void onFailure(Call<Person[]> call, Throwable t) {}
+            public void onFailure(Call<List<Person>> call, Throwable t) {
+            }
         });
     }
     private void addListenerToListView() {

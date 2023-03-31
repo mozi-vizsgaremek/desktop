@@ -6,8 +6,8 @@ import retrofit2.http.*;
 import java.util.List;
 
 public interface UsersCRUD {
-    @GET("/auth/admin")
-    Call<Person[]> getPeople();
+    @GET("/auth/admin/")
+    Call<List<Person>> getPeople(@Header("Authorization") String accessKey);
 
     @POST("/auth/admin")
     Call<Person> createPerson(@Body Person person);
