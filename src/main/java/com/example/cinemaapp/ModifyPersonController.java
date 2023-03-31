@@ -60,8 +60,6 @@ public class ModifyPersonController {
     private Button backToMainMenuButton;
     private Map<String, Person> idMap = new HashMap<>();
     // endregion
-
-    //TODO: delete test object newPerson, and add every person to listOfPeople using retrofit
     ArrayList<Person> lista = new ArrayList<>();
 
 
@@ -141,6 +139,7 @@ public class ModifyPersonController {
 
             listOfPeople.setItems(filteredData);
     }
+    //TODO: clear all labels before setting a new value
     private void addPersonData(String id) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
         var p = idMap.get(id);
