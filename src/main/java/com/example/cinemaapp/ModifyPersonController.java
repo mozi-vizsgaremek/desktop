@@ -95,9 +95,11 @@ public class ModifyPersonController {
         });
     }
     private void addListenerToTextField() {
+        //TODO: somehow this stopped working, dont really know why
             ObservableList<Person> data = FXCollections.observableArrayList();
             FilteredList<Person> filteredData = new FilteredList<>(data, p -> true);
-            searchByName.textProperty().addListener((observable, oldValue, newValue) -> filteredData.setPredicate(person -> {
+            searchByName.textProperty().addListener((observable, oldValue, newValue) ->
+                    filteredData.setPredicate(person -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
@@ -106,6 +108,8 @@ public class ModifyPersonController {
                 return person.toString().toLowerCase().contains(lowerCaseFilter);
             }));
             listOfPeople.setItems(filteredData);
+        System.out.println(filteredData);
+        System.out.println(data);
     }
     private void addPersonData(String id) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
@@ -199,6 +203,33 @@ public class ModifyPersonController {
     }
     public void modifyPassword() {
 
+        Person selectedPerson = listOfPeople.getSelectionModel().getSelectedItem();
+
+        VBox vBox = new VBox();
+        TextField tf = new TextField();
+        Button btn = new Button();
+        btn.setText("Modify");
+        vBox.getChildren().add(tf);
+        vBox.getChildren().add(btn);
+        vBox.setAlignment(Pos.CENTER);
+        Stage stage = new Stage();
+        stage.setTitle("Modifying...");
+        stage.setScene(new Scene(vBox, 230, 100));
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.show();
+        btn.setOnAction(actionEvent1 -> {
+            selectedPerson.password = tf.getText();
+            vBox.getChildren().remove(btn);
+            vBox.getChildren().remove(tf);
+            Label label = new Label();
+            label.setText("Modification was successful");
+            vBox.getChildren().add(label);
+            stage.setOnCloseRequest(event -> {
+                UsersCRUD usersCRUD = RetrofitSingleton.getInstance().create(UsersCRUD.class);
+                selectedPerson.password = tf.getText();
+                modifyHelper(selectedPerson, stage, usersCRUD);
+            });
+        });
     }
     public void modifyFirstName() {
         Person selectedPerson = listOfPeople.getSelectionModel().getSelectedItem();
