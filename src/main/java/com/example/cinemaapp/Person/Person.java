@@ -1,4 +1,4 @@
-package com.example.cinemaapp;
+package com.example.cinemaapp.Person;
 
 import java.time.LocalDateTime;
 

@@ -1,5 +1,7 @@
-package com.example.cinemaapp;
+package com.example.cinemaapp.Person;
 
+import com.example.cinemaapp.Login.LoginController;
+import com.example.cinemaapp.Menu.MainMenuController;
 import com.example.cinemaapp.rest.RetrofitSingleton;
 import com.example.cinemaapp.rest.auth.TokenManager;
 import javafx.collections.FXCollections;
@@ -388,14 +390,14 @@ public class ModifyPersonController {
         });
     }
     // endregion
-    public void logoutFromModifyPerson(ActionEvent event) {
+    public void logout(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setHeaderText("You're about to log out!");
         alert.setContentText("Do you really want to log out?");
         if (alert.showAndWait().get() == ButtonType.OK){
             try {
-                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginView.fxml")));
+                Parent root = FXMLLoader.load(Objects.requireNonNull(LoginController.class.getResource("LoginView.fxml")));
                 Stage stage = new Stage();
                 stage.setTitle("User Login");
                 stage.setScene(new Scene(root, 800, 600));
@@ -418,7 +420,7 @@ public class ModifyPersonController {
         }
     }
     public void backToMainMenu(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenuView.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(MainMenuController.class.getResource("MainMenuView.fxml")));
         Stage stage = new Stage();
         stage.setTitle("Main menu");
         stage.setMaximized(true);

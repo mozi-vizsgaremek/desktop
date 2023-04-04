@@ -1,4 +1,4 @@
-package com.example.cinemaapp;
+package com.example.cinemaapp.Login;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;

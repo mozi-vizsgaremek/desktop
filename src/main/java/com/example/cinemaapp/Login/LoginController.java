@@ -1,7 +1,7 @@
-package com.example.cinemaapp;
+package com.example.cinemaapp.Login;
 
+import com.example.cinemaapp.Menu.MainMenuController;
 import com.example.cinemaapp.rest.auth.TokenManager;
-import com.example.cinemaapp.rest.auth.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class LoginController{
@@ -50,7 +51,7 @@ public class LoginController{
         } else {
             //TODO: user can only log in with an administrator role
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("MainMenuView.fxml"));
+                Parent root = FXMLLoader.load(Objects.requireNonNull(MainMenuController.class.getResource("MainMenuView.fxml")));
                 Stage stage = new Stage();
                 stage.setTitle("Main menu");
                 stage.setMaximized(true);

@@ -1,13 +1,15 @@
-package com.example.cinemaapp;
+package com.example.cinemaapp.Menu;
 
+import com.example.cinemaapp.Login.LoginController;
+import com.example.cinemaapp.Auditorium.AuditoriumController;
+import com.example.cinemaapp.Movie.ModifyMovieController;
+import com.example.cinemaapp.Person.ModifyPersonController;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
@@ -15,26 +17,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class MainMenuController {
-    @FXML
-    private Button goToModifyPersonButton;
-    @FXML
-    private Button goToModifyMoviesButton;
-    @FXML
-    private Button goToModifyAuditoriumsButton;
-    @FXML
-    private Button logoutFromMainMenuButton;
-
-
-
-
-    @FXML
-    private void initialize() {
-
-    }
-
-
-
-
     public void logoutFromMainMenu(ActionEvent event) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Logout");
@@ -42,7 +24,7 @@ public class MainMenuController {
             alert.setContentText("Do you really want to log out?");
             if (alert.showAndWait().get() == ButtonType.OK){
                 try {
-                    Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
+                    Parent root = FXMLLoader.load(Objects.requireNonNull(LoginController.class.getResource("LoginView.fxml")));
                     Stage stage = new Stage();
                     stage.setTitle("User Login");
                     stage.setScene(new Scene(root, 800, 600));
@@ -66,7 +48,7 @@ public class MainMenuController {
     }
 
     public void goToModifyPerson(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ModifyPersonView.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(ModifyPersonController.class.getResource("ModifyPersonView.fxml")));
         Stage stage = new Stage();
         stage.setTitle("Modify a person");
         stage.setMaximized(true);
@@ -78,8 +60,8 @@ public class MainMenuController {
         stage.show();
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
-    public void goToModifyMovies(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ModifyMoviesView.fxml")));
+    public void goToModifyMovie(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(ModifyMovieController.class.getResource("ModifyMovieView.fxml")));
         Stage stage = new Stage();
         stage.setTitle("Modify a movie");
         stage.setMaximized(true);
@@ -91,8 +73,8 @@ public class MainMenuController {
         stage.show();
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
-    public void goToModifyAuditoriums(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ModifyAuditoriumsView.fxml")));
+    public void goToAuditorium(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(AuditoriumController.class.getResource("AuditoriumView.fxml")));
         Stage stage = new Stage();
         stage.setTitle("Modify an auditorium");
         stage.setMaximized(true);

@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox alignment="TOP_CENTER" maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" spacing="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemaapp.ModifyPersonController">
+<HBox alignment="TOP_CENTER" maxHeight="Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" spacing="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cinemaapp.Person.ModifyPersonController">
    <children>
       <VBox prefHeight="200.0" prefWidth="150.0">
          <children>
-            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logoutFromModifyPerson" text="Log out" />
+            <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#logout" text="Log out" />
             <Button fx:id="backToMainMenuButton" mnemonicParsing="false" onAction="#backToMainMenu" text="Back to main menu">
                <VBox.margin>
                   <Insets top="30.0" />
