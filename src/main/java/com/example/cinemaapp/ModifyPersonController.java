@@ -259,7 +259,6 @@ public class ModifyPersonController {
             });
         });
     }
-
     public void modifyLastName() {
         Person selectedPerson = listOfPeople.getSelectionModel().getSelectedItem();
 
@@ -411,7 +410,6 @@ public class ModifyPersonController {
             }
         }
     }
-
     public void exit(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
@@ -421,7 +419,6 @@ public class ModifyPersonController {
             stage.close();
         }
     }
-
     public void backToMainMenu(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainMenuView.fxml")));
         Stage stage = new Stage();
