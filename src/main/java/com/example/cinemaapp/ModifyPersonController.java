@@ -2,6 +2,8 @@ package com.example.cinemaapp;
 
 import com.example.cinemaapp.rest.RetrofitSingleton;
 import com.example.cinemaapp.rest.auth.TokenManager;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -59,7 +61,6 @@ public class ModifyPersonController {
     private void initialize() throws IOException {
         addItemsToListOfPeople();
         addListenerToListView();
-        addListenerToTextField();
     }
     private void addItemsToListOfPeople() throws IOException {
         UsersCRUD usersCRUD = RetrofitSingleton.getInstance().create(UsersCRUD.class);
@@ -75,6 +76,7 @@ public class ModifyPersonController {
                     for (var person : personList) {
                         idMap.put(person.id, person);
                     }
+                    addListenerToTextField();
                 } else {
                     System.out.println("The person list is null.");
                 }
@@ -95,21 +97,18 @@ public class ModifyPersonController {
         });
     }
     private void addListenerToTextField() {
-        //TODO: somehow this stopped working, dont really know why
-            ObservableList<Person> data = FXCollections.observableArrayList();
+            var data = FXCollections.observableArrayList(listOfPeople.getItems());
             FilteredList<Person> filteredData = new FilteredList<>(data, p -> true);
-            searchByName.textProperty().addListener((observable, oldValue, newValue) ->
-                    filteredData.setPredicate(person -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                return person.toString().toLowerCase().contains(lowerCaseFilter);
-            }));
-            listOfPeople.setItems(filteredData);
-        System.out.println(filteredData);
-        System.out.println(data);
+            searchByName.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(person -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    return person.toString().toLowerCase().contains(lowerCaseFilter);
+                });
+                listOfPeople.setItems(filteredData);
+            });
     }
     private void addPersonData(String id) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
