@@ -2,11 +2,13 @@ package com.example.cinemaapp.Auditorium;
 
 import com.example.cinemaapp.Login.LoginController;
 import com.example.cinemaapp.Menu.MainMenuController;
+import com.example.cinemaapp.Person.Person;
 import com.example.cinemaapp.rest.RetrofitSingleton;
 import com.example.cinemaapp.rest.auth.TokenManager;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -35,6 +37,7 @@ public class AuditoriumController {
     public Label seatsLabel;
     public Button deleteButton;
     public Button createButton;
+    public TextField searchByName;
     // region Declarations
     @FXML
     private ListView<Auditorium> listOfAuditoriums;
@@ -56,7 +59,7 @@ public class AuditoriumController {
                     observableList.addAll(auditoriumList);
                     listOfAuditoriums.getItems().clear();
                     listOfAuditoriums.setItems(observableList);
-                    //addListenerToTextField();
+                    addListenerToTextField();
                 } else {
                     System.out.println("The auditorium list is null.");
                 }
@@ -86,8 +89,19 @@ public class AuditoriumController {
         nameLabel.setText("");
         seatsLabel.setText("");
     }
-    private void addListenerToTextField() throws IOException {
-
+    private void addListenerToTextField() {
+        var data = FXCollections.observableArrayList(listOfAuditoriums.getItems());
+        FilteredList<Auditorium> filteredData = new FilteredList<>(data, p -> true);
+        searchByName.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(auditorium -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+                return auditorium.toString().toLowerCase().contains(lowerCaseFilter);
+            });
+            listOfAuditoriums.setItems(filteredData);
+        });
     }
     public void createNewAuditorium() {
         try {

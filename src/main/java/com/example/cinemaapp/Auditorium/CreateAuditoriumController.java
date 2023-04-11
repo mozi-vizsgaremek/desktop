@@ -73,8 +73,7 @@ public class CreateAuditoriumController {
             public void onResponse(Call<Auditorium> call, Response<Auditorium> response) {
                 if (response.isSuccessful()) {
                     Platform.runLater(() -> {
-                            Auditorium createdAuditorium = response.body();
-                        newAuditorium = createdAuditorium;
+                        newAuditorium = response.body();
                         if (newAuditorium != null) {
                             listOfAuditoriums.getItems().add(newAuditorium);
                         }
