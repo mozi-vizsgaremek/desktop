@@ -17,12 +17,12 @@ public class TokenManager {
     private static String refreshToken;
     private static User user;
 
-    public static boolean login(String username, String password) throws IOException {
+    public static int login(String username, String password) throws IOException {
         var authService = RetrofitSingleton.getInstance().create(AuthService.class);
         var resp = authService.login(new LoginRequest(username, password)).execute();
 
         if (!resp.isSuccessful())
-            return false;
+            return 1; //1 if response is unsuccessful
 
         var tokens = resp.body();
 
@@ -33,9 +33,9 @@ public class TokenManager {
         user = parseJwt(accessToken);
         System.out.println(user.role);
         if (!Objects.equals(user.role, "admin")){
-            return false;
+            return 2;//2 if user's role is not admin
         }
-        return true;
+        return 3;//3 if response is successful and the user is an admin
     }
 
     public static User parseJwt(String accessToken) {

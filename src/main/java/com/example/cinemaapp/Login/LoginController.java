@@ -41,28 +41,34 @@ public class LoginController{
         }
         String usernameId = usernameField.getText();
         String password = passwordField.getText();
-        boolean flag = TokenManager.login(usernameId, password);
-        if (!flag) {
-            infoBox("Either you entered a wrong username or password, or you are not an administrator",
+        int flag = TokenManager.login(usernameId, password);
+        //documentation in TokenManager.java starting at line 25
+        if (flag == 1) {
+            infoBox("You entered wrong username or password!",
                     "Error", "Failed");
-            System.out.println();
         } else {
-            try {
-                String loggedInUser = usernameField.getText();
-                Parent root = FXMLLoader.load(Objects.requireNonNull(MainMenuController.class.getResource("MainMenuView.fxml")));
-                Stage stage = new Stage();
-                stage.setTitle("Main menu");
-                stage.setMaximized(true);
-                stage.setScene(new Scene(root, 800, 600));
-                stage.setOnCloseRequest(CloseEvent -> {
-                    CloseEvent.consume();
-                    exit(stage);
-                });
-                stage.show();
-                ((Node)(event.getSource())).getScene().getWindow().hide();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
+            if (flag == 2) {
+                infoBox("You are not an admin!",
+                        "Error", "Failed");
+            } else {
+                if (flag == 3) {
+                    try {
+                        Parent root = FXMLLoader.load(Objects.requireNonNull(MainMenuController.class.getResource("MainMenuView.fxml")));
+                        Stage stage = new Stage();
+                        stage.setTitle("Main menu");
+                        stage.setMaximized(true);
+                        stage.setScene(new Scene(root, 800, 600));
+                        stage.setOnCloseRequest(CloseEvent -> {
+                            CloseEvent.consume();
+                            exit(stage);
+                        });
+                        stage.show();
+                        ((Node)(event.getSource())).getScene().getWindow().hide();
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
