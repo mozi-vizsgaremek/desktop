@@ -10,7 +10,7 @@ public interface AuthService {
     Call<TokenPair> login(@Body() LoginRequest req);
 
     @POST("/auth/refresh")
-    Call<String> refresh(@Body() RefreshToken req);
+    Call<RefreshDto> refresh(@Body() RefreshToken req);
 
     @GET("/auth/admin/")
     Call<List<User>> getUsers(@Header("Authorization") String accessKey);

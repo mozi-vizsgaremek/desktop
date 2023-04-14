@@ -43,7 +43,7 @@ public class TokenManager {
         var resp = authService.refresh(new RefreshToken(refreshToken)).execute();
         if (!resp.isSuccessful())
             throw new RuntimeException("failed to refresh access token");
-        return resp.body();
+        return resp.body().accessToken;
     }
     public static String getAccessToken() throws IOException {
         var adjustedExp = user.exp - 30;
