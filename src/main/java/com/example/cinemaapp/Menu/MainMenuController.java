@@ -4,16 +4,29 @@ import com.example.cinemaapp.Login.LoginController;
 import com.example.cinemaapp.Auditorium.AuditoriumController;
 import com.example.cinemaapp.Movie.ModifyMovieController;
 import com.example.cinemaapp.Person.ModifyPersonController;
+import com.example.cinemaapp.Person.Person;
+import com.example.cinemaapp.Person.UsersCRUD;
+import com.example.cinemaapp.rest.RetrofitSingleton;
+import com.example.cinemaapp.rest.auth.TokenManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class MainMenuController {

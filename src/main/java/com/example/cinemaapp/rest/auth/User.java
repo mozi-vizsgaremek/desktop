@@ -12,21 +12,5 @@ public class User {
     public String firstName;
     public String lastName;
     public int exp; // expiry
-    public Role role;
-
-    public void setRole(String role) {
-        switch (role) {
-            case "employee":
-                this.role = Role.Employee;
-                break;
-            case "manager":
-                this.role = Role.Manager;
-                break;
-            case "admin":
-                this.role = Role.Admin;
-                break;
-            default:
-                this.role = Role.Customer;
-        }
-    }
+    public String role;
 }

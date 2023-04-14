@@ -1,8 +1,15 @@
 package com.example.cinemaapp.rest.auth;
+import com.example.cinemaapp.Auditorium.Auditorium;
 import com.example.cinemaapp.rest.RetrofitSingleton;
 import com.google.gson.Gson;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
+import java.util.Objects;
 
 
 public class TokenManager {
@@ -24,7 +31,10 @@ public class TokenManager {
         refreshToken = tokens.refreshToken;
 
         user = parseJwt(accessToken);
-
+        System.out.println(user.role);
+        if (!Objects.equals(user.role, "admin")){
+            return false;
+        }
         return true;
     }
 
@@ -34,7 +44,9 @@ public class TokenManager {
         var body = new String(decoder.decode(chunks[1]));
 
         var gson = new Gson();
-        return gson.fromJson(body, User.class);
+        User user = gson.fromJson(body, User.class);
+
+        return user;
     }
 
     public static long getUnixTime() {

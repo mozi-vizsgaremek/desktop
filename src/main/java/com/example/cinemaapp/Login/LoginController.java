@@ -30,27 +30,25 @@ public class LoginController{
     public void login(ActionEvent event) throws IOException {
 
         if (usernameField.getText().isEmpty()) {
-            showAlert("Form Error!",
+            showAlert("Empty username field",
                     "Please enter your username");
             return;
         }
         if (passwordField.getText().isEmpty()) {
-            showAlert( "Form Error!",
+            showAlert( "Empty password field",
                     "Please enter a password");
             return;
         }
-
         String usernameId = usernameField.getText();
         String password = passwordField.getText();
-
         boolean flag = TokenManager.login(usernameId, password);
-
         if (!flag) {
-            infoBox("Please enter correct Username and Password", "Error", "Failed");
+            infoBox("Either you entered a wrong username or password, or you are not an administrator",
+                    "Error", "Failed");
             System.out.println();
         } else {
-            //TODO: user can only log in with an administrator role
             try {
+                String loggedInUser = usernameField.getText();
                 Parent root = FXMLLoader.load(Objects.requireNonNull(MainMenuController.class.getResource("MainMenuView.fxml")));
                 Stage stage = new Stage();
                 stage.setTitle("Main menu");
@@ -68,9 +66,6 @@ public class LoginController{
             }
         }
     }
-
-
-
     public void exit(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
