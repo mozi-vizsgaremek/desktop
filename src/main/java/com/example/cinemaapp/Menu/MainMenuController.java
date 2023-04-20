@@ -57,6 +57,7 @@ public class MainMenuController {
 
         if (alert.showAndWait().get() == ButtonType.OK){
             stage.close();
+            System.exit(0);
         }
     }
 

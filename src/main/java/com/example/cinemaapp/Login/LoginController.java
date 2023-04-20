@@ -76,9 +76,9 @@ public class LoginController{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setContentText("Do you really want to exit the application?");
-
         if (alert.showAndWait().get() == ButtonType.OK){
             stage.close();
+            System.exit(0);
         }
     }
 
