@@ -2,31 +2,36 @@ package com.example.cinemaapp.Movie;
 
 import com.example.cinemaapp.Login.LoginController;
 import com.example.cinemaapp.Menu.MainMenuController;
-import com.example.cinemaapp.Person.Person;
-import com.example.cinemaapp.Person.UsersCRUD;
 import com.example.cinemaapp.rest.RetrofitSingleton;
 import com.example.cinemaapp.rest.auth.TokenManager;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.io.File;
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+
 
 public class ModifyMovieController {
     public TextField searchByName;
@@ -37,6 +42,10 @@ public class ModifyMovieController {
     public Label durationMinsLabel;
     public Label thumbnailUrlLabel;
     public Label bannerUrlLabel;
+    public Button uploadThumbnailUrl;
+    public Button uploadBannerUrl;
+    public Button copyThumbnail;
+    public Button copyBanner;
     @FXML
     private ListView<Movie> listOfMovies;
     private final Map<String, Movie> idMap = new HashMap<>();
@@ -44,13 +53,14 @@ public class ModifyMovieController {
 
     @FXML
     private void initialize() throws IOException {
-        //addItemsToListOfMovies();
+        addItemsToListOfMovies();
         addListenerToListView();
+
     }
 
-    /*private void addItemsToListOfMovies() throws IOException {
-        UsersCRUD usersCRUD = RetrofitSingleton.getInstance().create(UsersCRUD.class);
-        var call = usersCRUD.getPeople(TokenManager.getAccessToken());
+    private void addItemsToListOfMovies() throws IOException {
+        MoviesCRUD moviesCRUD = RetrofitSingleton.getInstance().create(MoviesCRUD.class);
+        var call = moviesCRUD.getMovies(TokenManager.getAccessToken());
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
@@ -72,7 +82,7 @@ public class ModifyMovieController {
                 System.out.println("The API call failed.");
             }
         });
-    }*/
+    }
 
     private void addListenerToTextField() {
         var data = FXCollections.observableArrayList(listOfMovies.getItems());
@@ -90,10 +100,9 @@ public class ModifyMovieController {
     }
     private void addListenerToListView() {
         listOfMovies.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            String selectedId = newValue.id;
-            Movie selectedPerson = idMap.get(selectedId);
+            Movie selectedMovie = listOfMovies.getSelectionModel().getSelectedItem();
             clearMovieData();
-            //addPersonData(selectedPerson.id);
+            addMovieData(selectedMovie);
         });
     }
     private void clearMovieData() {
@@ -104,28 +113,170 @@ public class ModifyMovieController {
         durationMinsLabel.setText("");
         thumbnailUrlLabel.setText("");
         bannerUrlLabel.setText("");
+        copyThumbnail.setDisable(true);
+        copyBanner.setDisable(true);
     }
-    /*private void addPersonData(String id) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-        var p = idMap.get(id);
-        titleLabel.setText(idMap.get(id).id);
-        first_nameLabel.setText(idMap.get(id).title);
-        last_nameLabel.setText(idMap.get(id).subtitle);
-        hourly_wageLabel.setText(idMap.get(id).description);
-        reg_dateLabel.setText(idMap.get(id).durationMins);
-        if (p.hireDate != null) {
-            hire_dateLabel.setText(formatter.format(idMap.get(id).thumbnailUrl));
+    private void addMovieData(Movie movie) {
+        idLabel.setText(movie.id);
+        titleLabel.setText(movie.title);
+        subtitleLabel.setText(movie.subtitle);
+        descriptionLabel.setText(movie.description);
+        durationMinsLabel.setText(String.valueOf(movie.durationMins));
+        uploadThumbnailUrl.setDisable(false);
+        uploadBannerUrl.setDisable(false);
+        if (movie.thumbnailUrl != null) {
+            thumbnailUrlLabel.setText(movie.thumbnailUrl);
+            copyThumbnail.setDisable(false);
+            copyThumbnail.setOnMouseClicked(mouseEvent -> {
+                final Clipboard clipboard = Clipboard.getSystemClipboard();
+                final ClipboardContent content = new ClipboardContent();
+                content.putString(thumbnailUrlLabel.getText());
+                clipboard.setContent(content);
+            });
         }
-        roleLabel.setText(idMap.get(id).role);
-        if (p.managerId != null) {
-            managerIdLabel.setText(p.managerId);
+        if (movie.bannerUrl != null) {
+            bannerUrlLabel.setText(movie.bannerUrl);
+            copyBanner.setDisable(false);
+            copyBanner.setOnMouseClicked(mouseEvent -> {
+                final Clipboard clipboard = Clipboard.getSystemClipboard();
+                final ClipboardContent content = new ClipboardContent();
+                content.putString(bannerUrlLabel.getText());
+                clipboard.setContent(content);
+            });
         }
-    }*/
-    public void deleteAuditorium(ActionEvent actionEvent) {
-
     }
-    public void createNewAuditorium(ActionEvent actionEvent) {
+    public void uploadThumbnail() throws IOException {
+        MovieImageDto movieImageDto = new MovieImageDto();
+        Movie selectedMovie = listOfMovies.getSelectionModel().getSelectedItem();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select an image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            String path = selectedFile.getPath();
+            try {
+                byte[] imageBytes = Files.readAllBytes(Paths.get(path));
+                movieImageDto.thumbnail = Base64.getEncoder().encodeToString(imageBytes);
+                movieImageDto.banner = null;
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        instanceHelper(movieImageDto, selectedMovie);
+    }
+    public void uploadBanner() throws IOException {
+        MovieImageDto movieImageDto = new MovieImageDto();
+        Movie selectedMovie = listOfMovies.getSelectionModel().getSelectedItem();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select an image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            String path = selectedFile.getPath();
+            try {
+                byte[] imageBytes = Files.readAllBytes(Paths.get(path));
+                movieImageDto.thumbnail = null;
+                movieImageDto.banner = Base64.getEncoder().encodeToString(imageBytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        instanceHelper(movieImageDto, selectedMovie);
+    }
+
+    private void instanceHelper(MovieImageDto movieImageDto, Movie selectedMovie) throws IOException {
+        MoviesCRUD moviesCRUD = RetrofitSingleton.getInstance().create(MoviesCRUD.class);
+        var call = moviesCRUD.addImage(TokenManager.getAccessToken(), movieImageDto, selectedMovie.id);
+        call.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<MovieUrlDto> call, Response<MovieUrlDto> response) {
+                if (response.isSuccessful()) {
+                    Platform.runLater(() -> {
+                        VBox vBox = new VBox();
+                        Label label = new Label();
+                        label.setText("Image successfully uploaded!");
+                        vBox.getChildren().add(label);
+                        Button btn = new Button();
+                        btn.setText("Okay");
+                        vBox.getChildren().add(btn);
+                        vBox.setAlignment(Pos.CENTER);
+                        Stage stage = new Stage();
+                        stage.setTitle("Success");
+                        stage.setScene(new Scene(vBox, 230, 100));
+                        stage.initModality(Modality.WINDOW_MODAL);
+                        stage.show();
+                        btn.setOnAction(actionEvent -> {
+                            stage.close();
+                            listOfMovies.getSelectionModel().getSelectedItem();
+                            if (movieImageDto.banner != null) {
+                                selectedMovie.bannerUrl = response.body().bannerUrl;
+                            }
+                            if (movieImageDto.thumbnail != null) {
+                                selectedMovie.thumbnailUrl = response.body().thumbnailUrl;
+                            }
+                            listOfMovies.refresh();
+                            clearMovieData();
+                            addMovieData(selectedMovie);
+                        });
+                    });
+                }
+            }
+            @Override
+            public void onFailure(Call<MovieUrlDto> call, Throwable throwable) {}
+        });
+    }
+    public void deleteMovie() throws IOException {
+        MoviesCRUD moviesCRUD = RetrofitSingleton.getInstance().create(MoviesCRUD.class);
+        String movieId = listOfMovies.getSelectionModel().getSelectedItem().id;
+        Call<Void> call = moviesCRUD.deleteMovie(TokenManager.getAccessToken(), movieId);
+        call.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Platform.runLater(() -> {
+                    Movie deletedMovie = listOfMovies.getSelectionModel().getSelectedItem();
+                    listOfMovies.getItems().remove(deletedMovie);
+                    VBox vBox = new VBox();
+                    Label label = new Label();
+                    label.setText("Auditorium successfully deleted!");
+                    vBox.getChildren().add(label);
+                    Button btn = new Button();
+                    btn.setText("Okay");
+                    vBox.getChildren().add(btn);
+                    vBox.setAlignment(Pos.CENTER);
+                    Stage stage = new Stage();
+                    stage.setTitle("Success");
+                    stage.setScene(new Scene(vBox, 230, 100));
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.show();
+                    btn.setOnAction(actionEvent -> {
+                        stage.close();
+                        listOfMovies.refresh();
+                    });
+                });
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                System.out.println("The API call failed.");
+            }
+        });
+    }
+    public void createNewMovie() {
+        try {
+            CreateMovieController controller2 = new CreateMovieController(listOfMovies);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateMovieView.fxml"));
+            loader.setController(controller2);
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Creating movie");
+            stage.setScene(new Scene(root, 1024, 768));
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public void logout(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -151,9 +302,9 @@ public class ModifyMovieController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setContentText("Do you really want to exit the application?");
-
         if (alert.showAndWait().get() == ButtonType.OK){
             stage.close();
+            System.exit(0);
         }
     }
     public void backToMainMenu(ActionEvent event) throws IOException {
@@ -169,4 +320,7 @@ public class ModifyMovieController {
         stage.show();
         ((Node)(event.getSource())).getScene().getWindow().hide();
     }
+
+
+
 }

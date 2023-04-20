@@ -26,23 +26,24 @@
         <children>
             <TextField fx:id="searchByName" />
             <Label alignment="TOP_CENTER" text="Search by name" textAlignment="CENTER" />
-            <Button fx:id="createButton" mnemonicParsing="false" onAction="#createNewAuditorium" text="Create new">
+            <Button fx:id="createButton" mnemonicParsing="false" onAction="#createNewMovie" text="Create new">
                 <VBox.margin>
                     <Insets top="40.0" />
                 </VBox.margin>
             </Button>
-            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteAuditorium" text="Delete">
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteMovie" text="Delete">
                 <VBox.margin>
                     <Insets top="60.0" />
                 </VBox.margin>
             </Button>
         </children>
     </VBox>
-    <ListView fx:id="listOfMovies" maxHeight="503.0" prefHeight="503.0" prefWidth="200.0" />
-    <GridPane fx:id="Properties" alignment="CENTER_RIGHT" maxHeight="500.0" maxWidth="300.0" vgap="5.0">
+    <ListView fx:id="listOfMovies" maxHeight="560.0" prefHeight="560.0" prefWidth="200.0" />
+    <GridPane fx:id="Properties" alignment="CENTER_RIGHT" maxHeight="560.0" maxWidth="450.0" vgap="5.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="163.0" />
+         <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="94.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -50,8 +51,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         <RowConstraints maxHeight="144.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
+         <RowConstraints maxHeight="83.0" minHeight="0.0" prefHeight="80.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <children>
             <Label fx:id="idLabel" wrapText="true" GridPane.columnIndex="1" />
@@ -70,6 +71,26 @@
          <Label text="thumbnailUrl" GridPane.rowIndex="5" />
          <Label fx:id="bannerUrlLabel" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
          <Label text="bannerUrl" GridPane.rowIndex="6" />
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+            <children>
+               <Button fx:id="uploadThumbnailUrl" disable="true" mnemonicParsing="false" onAction="#uploadThumbnail" text="Upload image">
+                  <VBox.margin>
+                     <Insets bottom="10.0" />
+                  </VBox.margin>
+               </Button>
+               <Button fx:id="copyThumbnail" disable="true" mnemonicParsing="false" text="Copy" />
+            </children>
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+            <children>
+               <Button fx:id="uploadBannerUrl" disable="true" mnemonicParsing="false" onAction="#uploadBanner" text="Upload image">
+                  <VBox.margin>
+                     <Insets bottom="10.0" />
+                  </VBox.margin>
+               </Button>
+               <Button fx:id="copyBanner" disable="true" mnemonicParsing="false" text="Copy" />
+            </children>
+         </VBox>
         </children>
     </GridPane>
     <padding>
