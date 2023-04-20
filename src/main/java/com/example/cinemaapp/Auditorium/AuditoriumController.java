@@ -1,8 +1,7 @@
 package com.example.cinemaapp.Auditorium;
 
-import com.example.cinemaapp.Login.LoginController;
 import com.example.cinemaapp.Menu.MainMenuController;
-import com.example.cinemaapp.Person.Person;
+import com.example.cinemaapp.Person.ModifyPersonController;
 import com.example.cinemaapp.rest.RetrofitSingleton;
 import com.example.cinemaapp.rest.auth.TokenManager;
 import javafx.application.Platform;
@@ -10,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -21,7 +19,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,17 +26,17 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 public class AuditoriumController {
 
+
+    // region Declarations
     public Label idLabel;
     public Label nameLabel;
     public Label seatsLabel;
     public Button deleteButton;
     public Button createButton;
     public TextField searchByName;
-    // region Declarations
     @FXML
     public ListView<Auditorium> listOfAuditoriums;
     // endregion
@@ -160,24 +157,7 @@ public class AuditoriumController {
     }
 
     public void logout(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Logout");
-        alert.setHeaderText("You're about to log out!");
-        alert.setContentText("Do you really want to log out?");
-        if (alert.showAndWait().get() == ButtonType.OK){
-            try {
-                Parent root = FXMLLoader.load(Objects.requireNonNull(LoginController.class.getResource("LoginView.fxml")));
-                Stage stage = new Stage();
-                stage.setTitle("User Login");
-                stage.setScene(new Scene(root, 800, 600));
-                stage.show();
-
-                ((Node)(event.getSource())).getScene().getWindow().hide();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        ModifyPersonController.logoutAlert(event);
     }
     public void exit(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

@@ -398,6 +398,10 @@ public class ModifyPersonController {
     }
     // endregion
     public void logout(ActionEvent event) {
+        logoutAlert(event);
+    }
+
+    public static void logoutAlert(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");
         alert.setHeaderText("You're about to log out!");
@@ -417,6 +421,7 @@ public class ModifyPersonController {
             }
         }
     }
+
     public void exit(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Logout");

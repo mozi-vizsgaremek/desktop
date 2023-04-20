@@ -31,24 +31,8 @@ import java.util.Objects;
 
 public class MainMenuController {
     public void logoutFromMainMenu(ActionEvent event) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Logout");
-            alert.setHeaderText("You're about to log out!");
-            alert.setContentText("Do you really want to log out?");
-            if (alert.showAndWait().get() == ButtonType.OK){
-                try {
-                    Parent root = FXMLLoader.load(Objects.requireNonNull(LoginController.class.getResource("LoginView.fxml")));
-                    Stage stage = new Stage();
-                    stage.setTitle("User Login");
-                    stage.setScene(new Scene(root, 800, 600));
-                    stage.show();
-                    ((Node)(event.getSource())).getScene().getWindow().hide();
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        ModifyPersonController.logoutAlert(event);
+    }
 
     public void exit(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

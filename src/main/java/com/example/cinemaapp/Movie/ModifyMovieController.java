@@ -1,7 +1,7 @@
 package com.example.cinemaapp.Movie;
 
-import com.example.cinemaapp.Login.LoginController;
 import com.example.cinemaapp.Menu.MainMenuController;
+import com.example.cinemaapp.Person.ModifyPersonController;
 import com.example.cinemaapp.rest.RetrofitSingleton;
 import com.example.cinemaapp.rest.auth.TokenManager;
 import javafx.application.Platform;
@@ -281,24 +281,7 @@ public class ModifyMovieController {
         }
     }
     public void logout(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Logout");
-        alert.setHeaderText("You're about to log out!");
-        alert.setContentText("Do you really want to log out?");
-        if (alert.showAndWait().get() == ButtonType.OK){
-            try {
-                Parent root = FXMLLoader.load(Objects.requireNonNull(LoginController.class.getResource("LoginView.fxml")));
-                Stage stage = new Stage();
-                stage.setTitle("User Login");
-                stage.setScene(new Scene(root, 800, 600));
-                stage.show();
-
-                ((Node)(event.getSource())).getScene().getWindow().hide();
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        ModifyPersonController.logoutAlert(event);
     }
     public void exit(Stage stage) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
