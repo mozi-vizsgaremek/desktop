@@ -29,6 +29,7 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 public class AuditoriumController {
 
@@ -40,7 +41,7 @@ public class AuditoriumController {
     public TextField searchByName;
     // region Declarations
     @FXML
-    private ListView<Auditorium> listOfAuditoriums;
+    public ListView<Auditorium> listOfAuditoriums;
     // endregion
     @FXML
     private void initialize() throws IOException {
@@ -79,9 +80,12 @@ public class AuditoriumController {
         });
     }
     private void addPersonData(Auditorium selectedAuditorium) {
-        idLabel.setText(selectedAuditorium.id);
-        nameLabel.setText(selectedAuditorium.name);
-        seatsLabel.setText(selectedAuditorium.seats.toString());
+        if (selectedAuditorium != null) {
+            idLabel.setText(selectedAuditorium.id);
+            nameLabel.setText(selectedAuditorium.name);
+            seatsLabel.setText(selectedAuditorium.seats.toString());
+        }
+
 
     }
     private void clearAuditoriumData() {
@@ -90,18 +94,17 @@ public class AuditoriumController {
         seatsLabel.setText("");
     }
     private void addListenerToTextField() {
-        var data = FXCollections.observableArrayList(listOfAuditoriums.getItems());
-        FilteredList<Auditorium> filteredData = new FilteredList<>(data, p -> true);
+        ObservableList<Auditorium> data = FXCollections.observableArrayList(listOfAuditoriums.getItems());
+        FilteredList<Auditorium> filteredData = new FilteredList<>(data);
         searchByName.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(auditorium -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
-                String lowerCaseFilter = newValue.toLowerCase();
-                return auditorium.toString().toLowerCase().contains(lowerCaseFilter);
+                return auditorium.toString().toLowerCase().contains(newValue.toLowerCase());
             });
-            listOfAuditoriums.setItems(filteredData);
         });
+        listOfAuditoriums.setItems(filteredData);
     }
     public void createNewAuditorium() {
         try {
@@ -122,14 +125,14 @@ public class AuditoriumController {
     public void deleteAuditorium() throws IOException {
         AuditoriumCRUD auditoriumCRUD = RetrofitSingleton.getInstance().create(AuditoriumCRUD.class);
         String auditoriumId = listOfAuditoriums.getSelectionModel().getSelectedItem().id;
+        Auditorium deletedAuditorium = listOfAuditoriums.getSelectionModel().getSelectedItem();
         Call<Void> call = auditoriumCRUD.deleteAuditorium(TokenManager.getAccessToken(), auditoriumId);
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 Platform.runLater(() -> {
-                    Auditorium deletedAuditorium = listOfAuditoriums.getSelectionModel().getSelectedItem();
                     listOfAuditoriums.getItems().remove(deletedAuditorium);
-
+                    System.out.println(listOfAuditoriums.getItems().remove(deletedAuditorium));
                     VBox vBox = new VBox();
                     Label label = new Label();
                     label.setText("Auditorium successfully deleted!");
