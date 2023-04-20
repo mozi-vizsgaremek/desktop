@@ -88,12 +88,16 @@ public class ModifyPersonController {
         });
     }
     private void addListenerToListView() {
-        setModifiyButtonsAvailable();
+
         listOfPeople.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            String selectedId = newValue.id;
-            Person selectedPerson = idMap.get(selectedId);
-            clearPersonData();
-            addPersonData(selectedPerson.id);
+            if (newValue != null) {
+                String selectedId = newValue.id;
+                Person selectedPerson = idMap.get(selectedId);
+                clearPersonData();
+                addPersonData(selectedPerson);
+                setModifiyButtonsAvailable();
+            }
+
         });
     }
     private void addListenerToTextField() {
@@ -110,21 +114,24 @@ public class ModifyPersonController {
                 listOfPeople.setItems(filteredData);
             });
     }
-    private void addPersonData(String id) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-        var p = idMap.get(id);
-        usernameLabel.setText(idMap.get(id).username);
-        first_nameLabel.setText(idMap.get(id).firstName);
-        last_nameLabel.setText(idMap.get(id).lastName);
-        hourly_wageLabel.setText(String.format("%d",idMap.get(id).hourlyWage));
-        reg_dateLabel.setText(formatter.format(idMap.get(id).registrationDate));
-        if (p.hireDate != null) {
-            hire_dateLabel.setText(formatter.format(idMap.get(id).hireDate));
+    private void addPersonData(Person person) {
+        if (person != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+
+            usernameLabel.setText(person.username);
+            first_nameLabel.setText(person.firstName);
+            last_nameLabel.setText(person.lastName);
+            hourly_wageLabel.setText(String.format("%d",person.hourlyWage));
+            reg_dateLabel.setText(formatter.format(person.registrationDate));
+            if (person.hireDate != null) {
+                hire_dateLabel.setText(formatter.format(person.hireDate));
+            }
+            roleLabel.setText(person.role);
+            if (person.managerId != null) {
+                managerIdLabel.setText(person.managerId);
+            }
         }
-        roleLabel.setText(idMap.get(id).role);
-        if (p.managerId != null) {
-            managerIdLabel.setText(p.managerId);
-        }
+
     }
     private void clearPersonData() {
         usernameLabel.setText("");
@@ -168,7 +175,7 @@ public class ModifyPersonController {
         });
         stage.close();
         listOfPeople.refresh();
-        addPersonData(selectedPerson.id);
+        addPersonData(selectedPerson);
     }
     public void modifyUsername(){
 

@@ -117,32 +117,34 @@ public class ModifyMovieController {
         copyBanner.setDisable(true);
     }
     private void addMovieData(Movie movie) {
-        idLabel.setText(movie.id);
-        titleLabel.setText(movie.title);
-        subtitleLabel.setText(movie.subtitle);
-        descriptionLabel.setText(movie.description);
-        durationMinsLabel.setText(String.valueOf(movie.durationMins));
-        uploadThumbnailUrl.setDisable(false);
-        uploadBannerUrl.setDisable(false);
-        if (movie.thumbnailUrl != null) {
-            thumbnailUrlLabel.setText(movie.thumbnailUrl);
-            copyThumbnail.setDisable(false);
-            copyThumbnail.setOnMouseClicked(mouseEvent -> {
-                final Clipboard clipboard = Clipboard.getSystemClipboard();
-                final ClipboardContent content = new ClipboardContent();
-                content.putString(thumbnailUrlLabel.getText());
-                clipboard.setContent(content);
-            });
-        }
-        if (movie.bannerUrl != null) {
-            bannerUrlLabel.setText(movie.bannerUrl);
-            copyBanner.setDisable(false);
-            copyBanner.setOnMouseClicked(mouseEvent -> {
-                final Clipboard clipboard = Clipboard.getSystemClipboard();
-                final ClipboardContent content = new ClipboardContent();
-                content.putString(bannerUrlLabel.getText());
-                clipboard.setContent(content);
-            });
+        if (movie != null) {
+            idLabel.setText(movie.id);
+            titleLabel.setText(movie.title);
+            subtitleLabel.setText(movie.subtitle);
+            descriptionLabel.setText(movie.description);
+            durationMinsLabel.setText(String.valueOf(movie.durationMins));
+            uploadThumbnailUrl.setDisable(false);
+            uploadBannerUrl.setDisable(false);
+            if (movie.thumbnailUrl != null) {
+                thumbnailUrlLabel.setText(movie.thumbnailUrl);
+                copyThumbnail.setDisable(false);
+                copyThumbnail.setOnMouseClicked(mouseEvent -> {
+                    final Clipboard clipboard = Clipboard.getSystemClipboard();
+                    final ClipboardContent content = new ClipboardContent();
+                    content.putString(thumbnailUrlLabel.getText());
+                    clipboard.setContent(content);
+                });
+            }
+            if (movie.bannerUrl != null) {
+                bannerUrlLabel.setText(movie.bannerUrl);
+                copyBanner.setDisable(false);
+                copyBanner.setOnMouseClicked(mouseEvent -> {
+                    final Clipboard clipboard = Clipboard.getSystemClipboard();
+                    final ClipboardContent content = new ClipboardContent();
+                    content.putString(bannerUrlLabel.getText());
+                    clipboard.setContent(content);
+                });
+            }
         }
     }
     public void uploadThumbnail() throws IOException {
