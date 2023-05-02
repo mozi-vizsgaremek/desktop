@@ -75,6 +75,7 @@
                         <configuration>
                             <mainClass>com.example.cinemaapp.Main</mainClass>
                             <bundleJre>true</bundleJre>
+                            <customizedJre>false</customizedJre>
                             <generateInstaller>true</generateInstaller>
                             <platform>windows</platform>
                             <winConfig>
